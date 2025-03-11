@@ -1,5 +1,6 @@
 #include "Random.hpp"
 #include <random>
+#include <vector>
 
 Random::Random() noexcept
 	: gen(std::random_device {}()),

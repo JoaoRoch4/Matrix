@@ -1,6 +1,8 @@
 #include <iostream>
 #include <print>
-#include <string>
+
+#pragma(push)
+#pragma(warning(disable : 001))
 
 int main() {
 

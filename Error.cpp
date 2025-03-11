@@ -1,15 +1,26 @@
 #include "Error.hpp"
-
 #include "MyTypes.hpp"
 
- #include <intrin.h>
+#include <__msvc_ostream.hpp>
+#include <intrin.h>
+#include <iostream>
+#include <stdexcept>
+
+#pragma diag_suppress 001
 
 void Error::Exit(const char *message) {
 	__CLS();
 	__debugbreak();
-	std::cerr << message << std::endl;
-	throw std::runtime_error(message);
-	exit(EXIT_FAILURE);
+	Print(message);
+	return throw std::runtime_error(message);
 }
 
-void Error::Exit(const str &message) {}
+void Error::Exit(const str &message) { return Exit(message.c_str()); }
+
+void Error::Print(const char *message) const noexcept {
+	std::cerr << message << std::endl;
+}
+
+void Error::Print(const str &message) const noexcept {
+	return Print(message.c_str());
+}

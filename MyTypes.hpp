@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Random.hpp"
+#include "Error.hpp"
+
 #include <any>
 #include <array>
 #include <chrono>
@@ -9,10 +11,15 @@
 #include <iostream>
 #include <limits>
 #include <memory>
-#include <print>
 #include <string>
 #include <utility>
 #include <vector>
+
+#ifdef __INTELLISENSE__
+#pragma push
+#pragma diag_suppress 0017
+#pragma warning(disable : VCIC001)
+#endif
 
 #define CnExcpt const noexcept
 #define CExprExcpt constexpr noexcept
@@ -21,8 +28,20 @@
 #define INLNCEXPR constexpr __forceinline
 #define CLEAR_SCREEN "\033[2J\033[1;1H"
 
+#define CheckPtr(Ptr)                                                  \
+	if (Ptr == nullptr) {                                              \
+		const str &__msg {str("Error:" #Ptr                             \
+							 "is null. " __FUNCTION__ "\n at Line: " + \
+							 ##__LINE__)};                              \
+		Error			 err;                                          \
+		err.Exit(__msg);                                               \
+	}
+
+
 
 using ANY = std::any;
+
+using ostr = std::ostream;
 
 // signed long long 64-bits interger.
 // Ocuppies 8 bytes.
@@ -255,5 +274,5 @@ using vRows	   = vec<size_t>;
 using VecPar   = vec<PAR<vCols, vRows>>;
 using Matrix2d = uptr<VecPar>;
 
-
+// Clear the screen.
 inline void __CLS() { std::cout << CLEAR_SCREEN << std::endl; }
