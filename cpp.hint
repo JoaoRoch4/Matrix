@@ -1,2 +1,5 @@
 #define CnExcpt
 #define INLN 
+#define EXIT_FAILURE
+#define __LINE__
+#define __FILE__

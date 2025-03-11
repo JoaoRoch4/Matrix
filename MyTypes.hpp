@@ -19,6 +19,7 @@
 
 #define INLN inline
 #define INLNCEXPR constexpr __forceinline
+#define CLEAR_SCREEN "\033[2J\033[1;1H"
 
 
 using ANY = std::any;
@@ -254,3 +255,5 @@ using vRows	   = vec<size_t>;
 using VecPar   = vec<PAR<vCols, vRows>>;
 using Matrix2d = uptr<VecPar>;
 
+
+inline void __CLS() { std::cout << CLEAR_SCREEN << std::endl; }

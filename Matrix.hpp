@@ -413,8 +413,7 @@ void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
 
 	// Todo: 
 
-	auto FillVec1 = [&VecSize1, &vec1, &rand, &vec1Min, &vec1Max,
-					 &func]() -> void {
+	auto FillVec1 = [&VecSize1, &vec1, &rand, &vec1Min, &vec1Max]() -> void {
 		for (size_t i = 0; i < VecSize1; ++i) {
 
 			if (rand)
