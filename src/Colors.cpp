@@ -1,14 +1,13 @@
 #include "Colors.hpp"
 #include "Error.hpp"
 #include "MyTypes.hpp"
-
 #include <cstdlib>
+#include <intrin.h>
 #include <iosfwd>
 #include <iostream>
 #include <memory>
 #include <sstream>
 #include <string>
-
 #include <termcolor.hpp>
 
 namespace My {
@@ -144,8 +143,7 @@ Colors::Colors(const ColorEnum			 &color,
 	}
 }
 
-Colors::Colors(const str &ColorReturn,
-			   const str &BackgroundReturn) noexcept {
+Colors::Colors(const str &ColorReturn, const str &BackgroundReturn) noexcept {
 	const bool EmptyColorReturn		 = ColorReturn.empty();
 	const bool EmptyBackgroundReturn = BackgroundReturn.empty();
 	const bool Empty = EmptyColorReturn && EmptyBackgroundReturn;
@@ -258,9 +256,9 @@ const void Colors::SetClassColor(const str &Txt) {
 
 const void Colors::SetClassBackgroundColor(
 	const BackgroundColorEnum &BackgroundColor) {
-	backgroundColor			  = BackgroundColor;
-	const str &result = strEnumToStream(BackgroundColor);
-	BackgroundReturnStr		  = result;
+	backgroundColor		= BackgroundColor;
+	const str &result	= strEnumToStream(BackgroundColor);
+	BackgroundReturnStr = result;
 }
 
 const void Colors::SetClassBackgroundColor(const str &BackgroundColor) {
@@ -288,20 +286,19 @@ const BackgroundColorEnum &Colors::EnumGetBackgroundColor() const noexcept {
 const bool &Colors::bGetLocale() const { return this->isLocalized; }
 
 const str &Colors::StrGetColor(const Colors &c) {
+
 	if (bISClassEmpty(c) == true) {
-		const static str &err = "Error: Class passed is empty. " +
-										std::to_string(__LINE__) + __func__ +
-										'\n';
-		constexpr const static char *none = "none";
+		const str &err {str("Error: Class passed is empty.\n In Line: " +
+							std::to_string(__LINE__) +
+							"Func: " __FUNCTION__ "\n")};
+
 		StaticError::Exit(err);
-		return none;
+		return str();
 	}
 	return c.ColorReturnStr;
 }
 
-const str &Colors::StrGetColor() const noexcept {
-	return this->ColorReturnStr;
-}
+const str &Colors::StrGetColor() const noexcept { return this->ColorReturnStr; }
 
 const str &Colors::StrGetBackgroundColor(const Colors &c) {
 	if (bISClassEmpty(c) == true) {
@@ -485,7 +482,7 @@ const BackgroundColorEnum &Colors::StringToBackgroundColorEnum(
 
 const str &Colors::strEnumToStream(const ColorEnum &color) {
 	static std::ostringstream ss;
-	static str		  result;
+	static str				  result;
 
 	if (color == ColorEnum::none || color == ColorEnum::reset) {
 		const static std::ostream &reset {std::cout << "" << termcolor::reset};
@@ -502,12 +499,12 @@ const str &Colors::strEnumToStream(const ColorEnum &color) {
 }
 
 const str &Colors::strEnumToStream(const BackgroundColorEnum &color) {
-	static strstream ss {};
-	static str		 result;
+	static strstrn ss {};
+	static str			  result;
 
 	if (color == BackgroundColorEnum::none ||
 		color == BackgroundColorEnum::reset) {
-		const static std::ostream &reset {std::cout << "" << termcolor::reset};
+		const static ostr &reset {std::cout << "" << termcolor::reset};
 		ss << reset.rdbuf();
 	}
 
@@ -525,10 +522,8 @@ const str &Colors::strEnumToTxt(const ColorEnum &color) {
 	return colorTxt;
 }
 
-const str &Colors::strEnumToTxt(
-	const BackgroundColorEnum &BackgroundColor) {
-	const static str &BackgroundColorTxt =
-		strEnumToText(BackgroundColor);
+const str &Colors::strEnumToTxt(const BackgroundColorEnum &BackgroundColor) {
+	const static str &BackgroundColorTxt = strEnumToText(BackgroundColor);
 	return BackgroundColorTxt;
 }
 
@@ -556,8 +551,7 @@ const void Colors::ResetBackgroundColor() noexcept {
 	SetClassBackgroundColor(BackgroundColorEnum::reset);
 }
 
-const std::ostream &Colors::Print(const str &msg,
-								  const ColorEnum	&color) {
+const std::ostream &Colors::Print(const str &msg, const ColorEnum &color) {
 	return std::cout << Colors::UseColor(color) << msg
 					 << Colors::UseColor(ColorEnum::reset);
 }
@@ -571,8 +565,7 @@ const str &Colors::UseColor(const BackgroundColorEnum &color) {
 	return UseBackgroundColor(color);
 }
 
-const str &Colors::UseBackgroundColor(
-	const BackgroundColorEnum &color) {
+const str &Colors::UseBackgroundColor(const BackgroundColorEnum &color) {
 	const static str &BgColor = strEnumToStream(color);
 	return BgColor;
 }
@@ -596,8 +589,6 @@ const Colors Colors::GetColors(const Colors &reference) noexcept {
 // TODO: Implement this function const Colors* Colors::GetColorsPtr(const Colors
 // &c)
 const Colors *Colors::GetColorsPtr(const Colors &c) noexcept { return &c; }
-
-const Colors *Colors::GetColorsPtr(const Colors &e) noexcept { return &e; }
 
 const Colors *Colors::GetColorsPtr(const Colors *Val) noexcept { return Val; }
 
@@ -698,8 +689,7 @@ const str &Colors::strCheckColorExists(const str &Color) {
 	} else return Color;
 }
 
-const str &Colors::strCheckBackgroundExists(
-	const str &BackgroundColor) {
+const str &Colors::strCheckBackgroundExists(const str &BackgroundColor) {
 	if (!bCheckBackgroundExists(BackgroundColor)) {
 		std::cout << termcolor::red << "Background color does not exist\n"
 				  << termcolor::reset;
@@ -844,7 +834,7 @@ const std::ostream &Colors::ostrColorEnumToOstream(const ColorEnum &color) {
 
 	default : {
 		constexpr const char *func = __func__;
-		static str	  err;
+		static str			  err;
 		err = "Error at: \nfunction: " + *func;
 		err + "In line: " + std::to_string(__LINE__) += '\n';
 		return errOstr_ostrDefaultCase(err);
@@ -944,8 +934,8 @@ const std::ostream &Colors::ostrBackgroundEnumToOstream(
 	}
 
 	default : {
-		const char		  *func = __func__;
-		static str err;
+		const char *func = __func__;
+		static str	err;
 		err = "Error at: \nfunction: " + *func;
 		err + "In line: " + std::to_string(__LINE__) += '\n';
 		return errOstr_ostrDefaultCase(err);
@@ -1030,8 +1020,8 @@ const str &Colors::strEnumToText(const ColorEnum &color) {
 	}
 
 	default : {
-		const char		  *func = __func__;
-		static str err;
+		const char *func = __func__;
+		static str	err;
 		err = "Error at: \nfunction: " + *func;
 		err + "In line: " + std::to_string(__LINE__) += '\n';
 		return errStr_strDefaultCase(err);
@@ -1129,8 +1119,8 @@ const str &Colors::strEnumToText(const BackgroundColorEnum &color) {
 	}
 
 	default : {
-		const char		  *func = __func__;
-		static str err;
+		const char *func = __func__;
+		static str	err;
 		err = "Error at: \nfunction: " + *func;
 		err + "In line: " + std::to_string(__LINE__) += '\n';
 		return errStr_strDefaultCase(err);
@@ -1149,7 +1139,7 @@ const str &Colors::errStr_strDefaultCase(const str &msg) {
 	__debugbreak();
 	SetClassColor(ColorEnum::reset);
 	StaticError::Print(msg);
-	const static str &none = "none";
+	const str &none ("none");
 	return none;
 }
 
@@ -1165,7 +1155,7 @@ const std::ostream &Colors::errOstr_ostrDefaultCase(const str &msg) {
 	__debugbreak();
 	SetClassColor(ColorEnum::reset);
 	StaticError::Print(msg);
-	const static std::ostream &none = std::cout << "msg";
+	const static ostr &none = std::cout << "msg";
 	return none;
 }
 
@@ -1193,10 +1183,11 @@ Colors &Colors::operator=(const Colors &other) {
 }
 
 Colors::~Colors() {
-	color = CEnum::none;
+	color			= CEnum::none;
 	backgroundColor = BgEnum::none;
 	ColorReturnStr.clear();
 	BackgroundReturnStr.clear();
-	isLocalized = false;
+	isLocalized		  = false;
 	InitializerCalled = false;
 }
+} // namespace My

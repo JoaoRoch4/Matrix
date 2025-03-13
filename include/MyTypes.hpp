@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Random.hpp"
 #include "Error.hpp"
-
+#include "Random.hpp"
+#include <__msvc_ostream.hpp>
 #include <any>
 #include <array>
 #include <chrono>
@@ -11,6 +11,7 @@
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -21,28 +22,32 @@
 #pragma warning(disable : VCIC001)
 #endif
 
-#define CnExcpt const noexcept
+#define CnExcpt	   const noexcept
 #define CExprExcpt constexpr noexcept
 
-#define INLN inline
-#define INLNCEXPR constexpr __forceinline
+#define INLN		 inline
+#define INLNCEXPR	 constexpr __forceinline
 #define CLEAR_SCREEN "\033[2J\033[1;1H"
 
-#define CheckPtr(Ptr)                                                  \
-	if (Ptr == nullptr) {                                              \
-		const str &__msg {str("Error:" #Ptr                             \
-							 "is null. " __FUNCTION__ "\n at Line: " + \
-							 ##__LINE__)};                              \
-		Error			 err;                                          \
-		err.Exit(__msg);                                               \
+using str	  = std::string;
+using ostr	  = std::ostream;
+using istr	  = std::istream;
+using strstrn = std::stringstream;
+
+#define CheckPtr(Ptr)                                                   \
+	if (Ptr == nullptr) {                                               \
+		const str &__msg {str("Error:"##Ptr                             \
+							  "is null. " __FUNCTION__ "\n at Line: " + \
+							  ##__LINE__)};                             \
+		Error	   err;                                                 \
+		err.Exit(__msg);                                                \
 	}
-
-
 
 using ANY = std::any;
 
-using ostr = std::ostream;
-
+using vPar	  = vec<PAR<vec<ld>, vec<ld>>>;
+using vParPtr = sptr<vec<PAR<vec<ld>, vec<ld>>>>;
+using vLdPar  = PAR<vec<ld>, vec<ld>>;
 // signed long long 64-bits interger.
 // Ocuppies 8 bytes.
 // Ranges from
@@ -79,38 +84,38 @@ using big_cvu = const volatile unsigned long long;
 // signed 8-bits char.
 // Ocuppies 1 byte.
 // Ranges from -128 to 127.
-using byte = signed char;
+using BYTES = signed char;
 
-// const signed 8-bits constant char. Ocuppies 1 byte. Ranges from -128 to 127.
+// const signed 8-bits constant char. Ocuppies 1 BYTES. Ranges from -128 to 127.
 // similar to cc
-using byte_c = const signed char;
+using BYTES_c = const signed char;
 
-// unsigned 8-bits char. Ocuppies 1 byte. Ranges from 0 to 255.
-using byte_u = unsigned char;
+// unsigned 8-bits char. Ocuppies 1 BYTES. Ranges from 0 to 255.
+using BYTES_u = unsigned char;
 
-// const unsigned 8-bits constant char. Ocuppies 1 byte. Ranges from 0 to 255.
-using byte_cu = const unsigned char;
+// const unsigned 8-bits constant char. Ocuppies 1 BYTES. Ranges from 0 to 255.
+using BYTES_cu = const unsigned char;
 
-using byte_v = volatile signed char;
+using BYTES_v = volatile signed char;
 
-using byte_cv = const volatile signed char;
+using BYTES_cv = const volatile signed char;
 
-using byte_vu = volatile unsigned char;
+using BYTES_vu = volatile unsigned char;
 
-using byte_cvu = const volatile unsigned char;
+using BYTES_cvu = const volatile unsigned char;
 
-// signed 16-bits wide char. Ocuppies 2 bytes. Ranges from -32.768 to 32.767.
+// signed 16-bits wide char. Ocuppies 2 BYTESs. Ranges from -32.768 to 32.767.
 // similar to short
-using byteW = wchar_t;
+using BYTESW = wchar_t;
 
-using byteW_v = volatile wchar_t;
+using BYTESW_v = volatile wchar_t;
 
-// const signed 16-bits wide char. Ocuppies 2 bytes.
+// const signed 16-bits wide char. Ocuppies 2 BYTESs.
 // Ranges from -32.768 to 32.767.
 // similar to const short
-using byteW_c = const wchar_t;
+using BYTESW_c = const wchar_t;
 
-using byteW_vc = const volatile wchar_t;
+using BYTESW_vc = const volatile wchar_t;
 
 // const signed 8-bits constant char. Ocuppies 1 byte however changes with use.
 // Ranges from -128 to 127.
@@ -158,7 +163,7 @@ using l_vu = volatile unsigned long;
 using l_cvu = const volatile unsigned long;
 
 // long double
-using ld =  long double;
+using ld = long double;
 
 // const long double
 using ld_c = const long double;
@@ -229,7 +234,6 @@ using vec = std::vector<T, std::allocator<T>>;
 
 template <class T>
 using vec2x = std::vector<vec<T>, std::allocator<vec<T>>>;
-
 
 template <typename T1, typename T2>
 using PAR = std::pair<T1, T2>;

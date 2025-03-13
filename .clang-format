@@ -9,7 +9,7 @@ AlignConsecutiveDeclarations:   Consecutive
 AlignConsecutiveMacros:         Consecutive
 
 AlignEscapedNewlines: Left
-AlignOperands: Align
+AlignOperands: DontAlign
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
@@ -71,15 +71,18 @@ BraceWrapping:
   BeforeLambdaBody:         false
   BeforeWhile:              false
 
+BreakAfterAttributes: Always
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Attach
 BreakBeforeInheritanceComma: false
+BreakBinaryOperations: RespectPrecedence
 BreakInheritanceList: BeforeColon
 BreakBeforeConceptDeclarations: true
-BreakBeforeTernaryOperators: true
+BreakBeforeTernaryOperators: false
 BreakConstructorInitializers: BeforeColon
 BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
+#BinPackLongBracedList: true 
 ColumnLimit: 80
 CommentPragmas: '^ IWYU pragma:'
 CompactNamespaces: false
@@ -88,8 +91,9 @@ ConstructorInitializerIndentWidth : 2
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
 DeriveLineEnding: true
-DerivePointerAlignment: true
+DerivePointerAlignment: false
 EmptyLineBeforeAccessModifier: Always
+EmptyLineAfterAccessModifier: Always
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: true
 ForEachMacros: 

@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{f0d4348b-377a-42a8-82e7-d6032b4b02c0}</ProjectGuid>
     <RootNamespace>Matrix</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -44,6 +44,8 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <VCToolsVersion>14.43.34808</VCToolsVersion>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -70,12 +72,22 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <SonarQubeTestProject>True</SonarQubeTestProject>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
-    <IncludePath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\crt\src\stl\;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(vcpkgPath);$(termicolorPath)</IncludePath>
-    <WindowsMetadataLinkKeyFile>$(IntDir)$(TargetName)</WindowsMetadataLinkKeyFile>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(vcpkgPath);$(termicolorPath);$(IncludePath);$(ProjectDir)include;$(ProjectDir)src</IncludePath>
+    <WindowsMetadataLinkKeyFile>$(IntDir)$(TargetName).winmd</WindowsMetadataLinkKeyFile>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <CopyLocalProjectReference>true</CopyLocalProjectReference>
+    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
+    <PublicIncludeDirectories>$(ProjectDir)include</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
+    <PublicModuleDirectories>$(ProjectDir)src</PublicModuleDirectories>
+    <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,7 +120,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp23</LanguageStandard>
@@ -117,7 +128,8 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <ExternalTemplatesDiagnostics>false</ExternalTemplatesDiagnostics>
       <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
-      <DisableSpecificWarnings>/wdVCIC001;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -125,6 +137,9 @@
       <EnableModules>true</EnableModules>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalUsingDirectories>$(ProjectDir)include; $(ProjectDir)src;</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +149,7 @@
       <LargeAddressAware>true</LargeAddressAware>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <WindowsMetadataFile>$(IntDir)$(TargetName)</WindowsMetadataFile>
+      <WindowsMetadataFile>$(IntDir)$(TargetName).winmd</WindowsMetadataFile>
       <WindowsMetadataLinkDelaySign>false</WindowsMetadataLinkDelaySign>
     </Link>
   </ItemDefinitionGroup>
@@ -155,31 +170,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Colors.cpp" />
-    <ClCompile Include="Error.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="Random.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Colors.hpp" />
-    <ClInclude Include="Error.hpp" />
-    <ClInclude Include="Main.hpp" />
-    <ClInclude Include="Matrix.hpp" />
-    <ClInclude Include="MyTypes.hpp" />
-    <ClInclude Include="Random.hpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include=".clang-format" />
     <None Include=".editorconfig" />
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
-    <None Include="cpp.hint">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
+    <None Include="cpp.hint" />
     <None Include="Macros.props" />
     <None Include="PropertySheet.user" />
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Colors.hpp" />
+    <ClInclude Include="include\Error.hpp" />
+    <ClInclude Include="include\Main.hpp" />
+    <ClInclude Include="include\Matrix.hpp" />
+    <ClInclude Include="include\MyTypes.hpp" />
+    <ClInclude Include="include\Random.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Colors.cpp" />
+    <ClCompile Include="src\Error.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Matrix.cpp" />
+    <ClCompile Include="src\Random.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

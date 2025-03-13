@@ -1,10 +1,9 @@
 #include "Matrix.hpp"
-
 #include "MyTypes.hpp"
 #include "Random.hpp"
-
 #include <iostream>
 #include <string>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -27,12 +26,10 @@ Matrix::Matrix(const size_t &Rows, const size_t &Cols) noexcept
 									std::move(std::ref(m_Vcols)))}),
 	m_vPar_Matrix({m_vPar_RowsCols}),
 	m_vParPtr_Matrix(mk_unq<vPar>()) {}
-	
 
-Matrix::Matrix(const size_t &iRows, const size_t &iCols,
-			   const vec<ld> &vRows, const vec<ld> &Vcols,
-			   const vLdPar &vPar_RowsCols, const vPar &vPar_Matrix,
-			   const vParPtr &vParPtr_Matrix) noexcept
+Matrix::Matrix(const size_t &iRows, const size_t &iCols, const vec<ld> &vRows,
+			   const vec<ld> &Vcols, const vLdPar &vPar_RowsCols,
+			   const vPar &vPar_Matrix, const vParPtr &vParPtr_Matrix) noexcept
   : m_iRows(iRows),
 	m_iCols(iCols),
 	m_vRows(vRows),

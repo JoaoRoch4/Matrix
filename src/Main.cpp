@@ -1,8 +1,6 @@
+#include <__msvc_ostream.hpp>
 #include <iostream>
 #include <print>
-
-#pragma(push)
-#pragma(warning(disable : 001))
 
 int main() {
 

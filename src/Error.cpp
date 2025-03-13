@@ -3,6 +3,7 @@
 
 #include <__msvc_ostream.hpp>
 #include <intrin.h>
+#include <iosfwd>
 #include <iostream>
 #include <stdexcept>
 
@@ -23,4 +24,9 @@ void Error::Print(const char *message) const noexcept {
 
 void Error::Print(const str &message) const noexcept {
 	return Print(message.c_str());
+}
+
+ostr &operator<<(ostr &os, const Error &e) noexcept {
+	std::cerr << e;
+	return os;
 }

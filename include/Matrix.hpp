@@ -3,7 +3,6 @@
 #include "Error.hpp"
 #include "MyTypes.hpp"
 #include "Random.hpp"
-
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -11,7 +10,6 @@
 #include <thread>
 #include <utility>
 #include <vector>
-
 
 class MatrixVec;
 
@@ -92,8 +90,6 @@ public:
 	 */
 	Matrix_T() noexcept;
 
-	void Start();
-
 	// Copy constructor
 	Matrix_T(const Matrix_T &other, const bool bDelete_vectors = false);
 
@@ -106,6 +102,9 @@ public:
 	// Constructor with Rows and Cols parameters also vectors
 	Matrix_T(const size_t Rows, const size_t Cols, vec<Type> &Vec1,
 			 vec<Type> &Vec2);
+
+protected:
+	void Start();
 
 	void Fill(bool bDelete_vectors = true);
 
@@ -120,6 +119,7 @@ public:
 		(vecs.shrink_to_fit(), ...);
 	}
 
+public:
 	__forceinline void SetRows(const Type &Rows) noexcept { M_iRows = Rows; }
 	__forceinline Type GetRows() const noexcept { return M_iRows; }
 
@@ -496,8 +496,10 @@ inline void Matrix_T<Type>::printMatrix() {
 	auto  it2_begin = vec2.begin();
 	auto  it2_end	= vec2.end();
 
-	if (it1_begin._Ptr == nullptr || it1_end._Ptr == nullptr ||
-		it2_begin._Ptr == nullptr || it2_end._Ptr == nullptr) {
+	if (it1_begin._Ptr == nullptr ||
+		it1_end._Ptr == nullptr ||
+		it2_begin._Ptr == nullptr ||
+		it2_end._Ptr == nullptr) {
 
 		const str &msg =
 			str("Error: Iterator is null." __FUNCTION__ "at Line: " + __LINE__);
