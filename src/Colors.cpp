@@ -1,8 +1,6 @@
 #include "Colors.hpp"
-
 #include "Error.hpp"
 #include "MyTypes.hpp"
-
 #include <cstdlib>
 #include <intrin.h>
 #include <iosfwd>
@@ -12,7 +10,7 @@
 #include <string>
 #include <termcolor.hpp>
 
-const static ColorEnum CeNone = ColorEnum::none;
+const static ColorEnum			 CeNone = ColorEnum::none;
 const static BackgroundColorEnum BgNone = BackgroundColorEnum::none;
 
 Colors::Colors() noexcept
@@ -445,46 +443,52 @@ const ColorEnum &Colors::StringToColorEnum(const str &color) {
 	else {
 		std::cout << termcolor::red << "Invalid color passed\n"
 				  << termcolor::reset;
-		 
-		return none;
+
+		return CeNone;
 	}
 }
 
 const BackgroundColorEnum &Colors::StringToBackgroundColorEnum(
 	const str &color) {
+
+	const static BackgroundColorEnum BgNone = BackgroundColorEnum::none;
+	static BackgroundColorEnum		 BgNum	= BackgroundColorEnum::none;
+
 	if (!bCheckBackgroundExists(color)) {
 		std::cout << termcolor::red << "Invalid Background color passed\n"
 				  << termcolor::reset;
-		return BackgroundColorEnum::none;
+		return BgNone;
 	}
-	if (color == "on_grey") return BackgroundColorEnum::on_grey;
-	else if (color == "on_red") return BackgroundColorEnum::on_red;
-	else if (color == "on_green") return BackgroundColorEnum::on_green;
-	else if (color == "on_yellow") return BackgroundColorEnum::on_yellow;
-	else if (color == "on_blue") return BackgroundColorEnum::on_blue;
-	else if (color == "on_magenta") return BackgroundColorEnum::on_magenta;
-	else if (color == "on_cyan") return BackgroundColorEnum::on_cyan;
-	else if (color == "on_white") return BackgroundColorEnum::on_white;
+	if (color == "on_grey") return BgNum = BackgroundColorEnum::on_grey;
+	else if (color == "on_red") return BgNum = BackgroundColorEnum::on_red;
+	else if (color == "on_green") return BgNum = BackgroundColorEnum::on_green;
+	else if (color == "on_yellow")
+		return BgNum = BackgroundColorEnum::on_yellow;
+	else if (color == "on_blue") return BgNum = BackgroundColorEnum::on_blue;
+	else if (color == "on_magenta")
+		return BgNum = BackgroundColorEnum::on_magenta;
+	else if (color == "on_cyan") return BgNum = BackgroundColorEnum::on_cyan;
+	else if (color == "on_white") return BgNum = BackgroundColorEnum::on_white;
 	else if (color == "on_bright_grey")
-		return BackgroundColorEnum::on_bright_grey;
+		return BgNum = BackgroundColorEnum::on_bright_grey;
 	else if (color == "on_bright_red")
-		return BackgroundColorEnum::on_bright_red;
+		return BgNum = BackgroundColorEnum::on_bright_red;
 	else if (color == "on_bright_green")
-		return BackgroundColorEnum::on_bright_green;
+		return BgNum = BackgroundColorEnum::on_bright_green;
 	else if (color == "on_bright_yellow")
-		return BackgroundColorEnum::on_bright_yellow;
+		return BgNum = BackgroundColorEnum::on_bright_yellow;
 	else if (color == "on_bright_blue")
 		return BackgroundColorEnum::on_bright_blue;
 	else if (color == "on_bright_magenta")
 		return BackgroundColorEnum::on_bright_magenta;
 	else if (color == "on_bright_cyan")
-		return BackgroundColorEnum::on_bright_cyan;
+		return BgNum = BackgroundColorEnum::on_bright_cyan;
 	else if (color == "on_bright_white")
-		return BackgroundColorEnum::on_bright_white;
+		return BgNum = BackgroundColorEnum::on_bright_white;
 	else {
 		std::cout << termcolor::red << "Invalid Background color passed\n"
 				  << termcolor::reset;
-		return BackgroundColorEnum::none;
+		return BgNone;
 	}
 }
 
@@ -1204,7 +1208,7 @@ Colors &Colors::operator=(const Colors &other) {
 }
 
 Colors::~Colors() {
-	color			= CEnum::none;
+	color			= CeNum::none;
 	backgroundColor = BgEnum::none;
 	ColorReturnStr.clear();
 	BackgroundReturnStr.clear();

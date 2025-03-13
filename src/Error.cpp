@@ -12,7 +12,7 @@ void Error::Exit(const char *message) {
 	throw std::runtime_error(message);
 }
 
-void Error::Exit(const STR &message) { return Exit(message.c_str()); }
+void Error::Exit(const STR &message) { Exit(message.c_str()); }
 
 void Error::Print(const char *message) const noexcept {
 	std::cerr << message << std::endl;

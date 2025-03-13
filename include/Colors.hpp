@@ -48,7 +48,7 @@ enum class BackgroundColorEnum {
 	on_bright_white
 };
 
-using CEnum	 = ColorEnum;
+using CeNum	 = ColorEnum;
 using BgEnum = BackgroundColorEnum;
 
 class Colors;
@@ -79,8 +79,10 @@ public:
 
 protected:
 
-	CEnum  color;
+	CeNum  color;
 	BgEnum backgroundColor;
+	CeNum  NoneColor;
+	BgEnum NoneBgColor;
 	str	   ColorReturnStr;
 	str	   BackgroundReturnStr;
 	bool   isLocalized;
@@ -96,15 +98,15 @@ public:
 	const void SetClassBackgroundColor(const str &BackgroundColor);
 	const void SetLocale(const bool &locale) noexcept;
 
-	const CEnum	 &EnumGetColor() const noexcept;
+	const CeNum	 &EnumGetColor() const noexcept;
 	const BgEnum &EnumGetBackgroundColor() const noexcept;
 
 	const bool &bGetLocale() const;
 	const bool &bCheckColorExists(const str &Color);
 	const bool &bCheckBackgroundExists(const str &BackgroundColor);
 
-	const CEnum	 &ColorEnum_CheckColorExists(const str &Color);
-	const CEnum	 &bCheckColorExistsReturnColorEnum(const ColorEnum &Color);
+	const CeNum	 &ColorEnum_CheckColorExists(const str &Color);
+	const CeNum	 &bCheckColorExistsReturnColorEnum(const ColorEnum &Color);
 	const BgEnum &enumBG_CheckBgColorExists(const str &BgColor);
 	const BgEnum &enumBG_CheckBgColorExists(const BgEnum &BgColor);
 

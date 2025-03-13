@@ -27,7 +27,7 @@ AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: Yes
 AttributeMacros: 
   - __capability
-  - __forceinline
+  - inline
   - __host__
   - __noinline
   - __nonnull

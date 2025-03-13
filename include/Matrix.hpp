@@ -1,11 +1,8 @@
 #pragma once
 
-
-
 #include "Error.hpp"
 #include "MyTypes.hpp"
 #include "Random.hpp"
-
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -13,8 +10,6 @@
 #include <thread>
 #include <utility>
 #include <vector>
-
-
 
 class Matrix {
 
@@ -113,34 +108,29 @@ protected:
 	void Start();
 
 	void Fill(bool bDelete_vectors = true);
-
 	void Fill(const Type Rows, const Type Cols, bool bDelete_vectors = true);
-
 	void Fill(const size_t Rows, const size_t Cols, vec<Type> &vec1,
 			  vec<Type> &vec2, bool bDelete_vectors = true);
 
 	template <typename... Vectors>
-	__forceinline void delete_vectors(Vectors &...vecs) {
+	inline void delete_vectors(Vectors &...vecs) {
 		(vecs.clear(), ...);
 		(vecs.shrink_to_fit(), ...);
 	}
 
 public:
 
-	__forceinline void SetRows(const Type &Rows) noexcept { M_iRows = Rows; }
-	__forceinline Type GetRows() const noexcept { return M_iRows; }
+	inline void SetRows(const Type &Rows) noexcept { M_iRows = Rows; }
+	inline Type GetRows() const noexcept { return M_iRows; }
 
-	__forceinline void SetCols(const Type &Cols) noexcept { M_iCols = Cols; }
-	__forceinline Type GetCols() const noexcept { return M_iCols; }
+	inline void SetCols(const Type &Cols) noexcept { M_iCols = Cols; }
+	inline Type GetCols() const noexcept { return M_iCols; }
 
-	__forceinline void SetVrows(const vec<Type> &vec) noexcept {
-		M_VecCows = vec;
-	}
-	__forceinline vec<Type> GetVrows() const noexcept { return M_VecCows; }
+	inline void SetVrows(const vec<Type> &vec) noexcept { M_VecCows = vec; }
+	inline vec<Type> GetVrows() const noexcept { return M_VecCows; }
 
-	__forceinline void SetMatrix(const Matrix2d &matrix) {
-		*M_Matrix = *matrix;
-	}
+	inline void SetMatrix(const Matrix2d &matrix) { *M_Matrix = *matrix; }
+	// inline Matrix2d GetMatrix() const noexcept { return M_Matrix; }
 
 	UptrRand &GetRandom() noexcept { return M_Rand; }
 
@@ -525,5 +515,3 @@ inline void Matrix_T<Type>::printMatrix() {
 		std::print("\n");
 	}
 }
-
-

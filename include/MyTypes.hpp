@@ -20,7 +20,7 @@
 #define CExprExcpt constexpr noexcept
 
 #define INLN		 inline
-#define INLNCEXPR	 constexpr __forceinline
+#define INLNCEXPR	 constexpr inline
 #define CLEAR_SCREEN "\033[2J\033[1;1H"
 #define Make_uptr	 std::make_unique
 #define mk_unq		 std::make_unique
