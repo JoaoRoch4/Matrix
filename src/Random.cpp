@@ -3,14 +3,14 @@
 #include <vector>
 
 Random::Random() noexcept
-	: gen(std::random_device {}()),
-	  dist_float(),
-	  dist_double(),
-	  dist_longdouble(),
-	  dist_int(),
-	  dist_SizeT(),
-	  Num_real(),
-	  Num_Int() {}
+  : gen(std::random_device {}()),
+	dist_float(),
+	dist_double(),
+	dist_longdouble(),
+	dist_int(),
+	dist_SizeT(),
+	Num_real(),
+	Num_Int() {}
 
 Random::Random(const Random &other) noexcept : Random() {
 

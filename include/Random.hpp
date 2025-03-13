@@ -8,7 +8,8 @@
 
 class Random {
 
-  protected:
+protected:
+
 	std::mt19937_64 gen;
 
 	std::uniform_real_distribution<float>		dist_float;
@@ -20,7 +21,8 @@ class Random {
 	long double Num_real;
 	size_t		Num_Int;
 
-  public:
+public:
+
 	Random() noexcept;
 	~Random() noexcept = default;
 
@@ -210,7 +212,8 @@ class Random {
 
 class StaticRandom : protected Random {
 
-  public:
+public:
+
 	StaticRandom() noexcept {}
 	~StaticRandom() = default;
 

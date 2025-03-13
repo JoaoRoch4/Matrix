@@ -76,22 +76,32 @@
     <SonarQubeTestProject>True</SonarQubeTestProject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(vcpkgPath);$(termicolorPath);$(IncludePath);$(ProjectDir)include;$(ProjectDir)src</IncludePath>
     <WindowsMetadataLinkKeyFile>$(IntDir)$(TargetName).winmd</WindowsMetadataLinkKeyFile>
-    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
-    <CopyLocalProjectReference>true</CopyLocalProjectReference>
-    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
-    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
-    <PublicIncludeDirectories>$(ProjectDir)include</PublicIncludeDirectories>
+    <CopyLocalDeploymentContent>false</CopyLocalDeploymentContent>
+    <CopyLocalProjectReference>false</CopyLocalProjectReference>
+    <CopyLocalDebugSymbols>false</CopyLocalDebugSymbols>
+    <CopyCppRuntimeToOutputDir>false</CopyCppRuntimeToOutputDir>
+    <PublicIncludeDirectories>$(include_dir);$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
-    <PublicModuleDirectories>$(ProjectDir)src</PublicModuleDirectories>
+    <PublicModuleDirectories>$(src_dir);$(PublicModuleDirectories)</PublicModuleDirectories>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
+    <CodeAnalysisRuleSet>Rules.ruleset</CodeAnalysisRuleSet>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath);$(include_dir);$(src_dir);$(termicolorPath)</IncludePath>
+    <SourcePath>$(VC_SourcePath);</SourcePath>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgXUseBuiltInApplocalDeps>true</VcpkgXUseBuiltInApplocalDeps>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgInstalledDir>.\vcpkg_installed\x64-windows\bin</VcpkgInstalledDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -119,27 +129,28 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp23</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
-      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
-      <ExternalTemplatesDiagnostics>false</ExternalTemplatesDiagnostics>
-      <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <EnableModules>true</EnableModules>
-      <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <CompileAs>CompileAsCpp</CompileAs>
-      <AdditionalUsingDirectories>$(ProjectDir)include; $(ProjectDir)src;</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
+      <EnablePREfast>false</EnablePREfast>
+      <BuildStlModules>true</BuildStlModules>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <ErrorReporting>Send</ErrorReporting>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,8 +161,11 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <WindowsMetadataFile>$(IntDir)$(TargetName).winmd</WindowsMetadataFile>
-      <WindowsMetadataLinkDelaySign>false</WindowsMetadataLinkDelaySign>
+      <WindowsMetadataLinkDelaySign>true</WindowsMetadataLinkDelaySign>
+      <LinkErrorReporting>SendErrorReport</LinkErrorReporting>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
+    <Manifest />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -174,10 +188,12 @@
     <None Include=".editorconfig" />
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="ClassDiagram.cd" />
     <None Include="cpp.hint" />
     <None Include="Macros.props" />
     <None Include="PropertySheet.user" />
     <None Include="README.md" />
+    <None Include="Rules.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Colors.hpp" />

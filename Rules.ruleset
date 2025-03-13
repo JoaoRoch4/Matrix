@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules" ToolsVersion="17.0">
+  <Include Path="cppcorecheckclassrules.ruleset" Action="Default" />
+  <Include Path="cppcorecheckownerpointerrules.ruleset" Action="Default" />
+  <Include Path="cppcorecheckrawpointerrules.ruleset" Action="Default" />
+  <Include Path="cppcorecheckrules.ruleset" Action="Default" />
+  <Include Path="nativeminimumrules.ruleset" Action="Default" />
+  <Include Path="nativerecommendedrules.ruleset" Action="Default" />
+</RuleSet>

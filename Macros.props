@@ -4,6 +4,8 @@
   <PropertyGroup Label="UserMacros">
     <vcpkgPath>C:\vcpkg</vcpkgPath>
     <termicolorPath>C:\vcpkg\packages\termcolor_x64-windows\include\termcolor\</termicolorPath>
+    <include_dir>$(ProjectDir)include</include_dir>
+    <src_dir>$(ProjectDir)src</src_dir>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
@@ -15,6 +17,13 @@
     <BuildMacro Include="termicolorPath">
       <Value>$(termicolorPath)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="include_dir">
+      <Value>$(include_dir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="src_dir">
+      <Value>$(src_dir)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

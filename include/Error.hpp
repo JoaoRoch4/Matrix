@@ -1,38 +1,42 @@
 #pragma once
 
-#include "MyTypes.hpp"
-
-#include <ostream>
+#include <iosfwd>
+#include <string>
 
 class Error {
 
 public:
-	void Exit(const char *message);
-	void Exit(const str &message);
-	void Print(const char *message) const noexcept;
-	void Print(const str &message) const noexcept;
 
-	friend ostr &operator<<(ostr &os, const Error &e) noexcept;
+	using STR  = std::string;
+	using OSTR = std::ostream;
+
+	[[noreturn]]
+	void Exit(const char *message);
+
+	[[noreturn]]
+	void Exit(const STR &message);
+
+	void Print(const char *message) const noexcept;
+
+	void Print(const STR &message) const noexcept;
 
 	Error() = default;
 
 	bool operator==(const Error &other) const = default;
 };
 
-class StaticError : public Error {
+class StaticError : private Error {
 
 public:
+
+	[[noreturn]]
 	static void Exit(const char *message) { Error().Exit(message); }
-	static void Exit(const str &message) { Error().Exit(message); }
+
+	[[noreturn]]
+	static void Exit(const STR &message) { Error().Exit(message); }
+
 	static void Print(const char *message) noexcept { Error().Print(message); }
-	static void Print(const str &message) noexcept { Error().Print(message); }
-
-	static friend ostr &operator<<(ostr &os, const StaticError &e) noexcept {
-
-		Error << e;
-		 
-		
-	}
+	static void Print(const STR &message) noexcept { Error().Print(message); }
 
 	StaticError() = default;
 };

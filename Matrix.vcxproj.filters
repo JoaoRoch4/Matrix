@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Misc">
       <UniqueIdentifier>{51305279-6bae-4832-80a7-1025ff1aeb0f}</UniqueIdentifier>
     </Filter>
@@ -15,6 +11,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="git">
+      <UniqueIdentifier>{a6eba3ba-0cd7-4a99-b0a4-9c9a95a6a04e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="format">
+      <UniqueIdentifier>{17b0cd59-7b3d-41f7-8bbe-abcdeabebae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project">
+      <UniqueIdentifier>{421f5313-c073-40af-8946-685a6a6d4896}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,28 +60,34 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".clang-format">
-      <Filter>Misc</Filter>
-    </None>
-    <None Include=".editorconfig">
+    <None Include="ClassDiagram.cd">
       <Filter>Misc</Filter>
     </None>
     <None Include=".gitattributes">
-      <Filter>Misc</Filter>
+      <Filter>git</Filter>
     </None>
     <None Include=".gitignore">
-      <Filter>Misc</Filter>
+      <Filter>git</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>git</Filter>
+    </None>
+    <None Include=".editorconfig">
+      <Filter>format</Filter>
+    </None>
+    <None Include=".clang-format">
+      <Filter>format</Filter>
+    </None>
+    <None Include="Macros.props">
+      <Filter>Project</Filter>
     </None>
     <None Include="cpp.hint">
       <Filter>Misc</Filter>
     </None>
-    <None Include="Macros.props">
-      <Filter>Misc</Filter>
-    </None>
     <None Include="PropertySheet.user">
-      <Filter>Misc</Filter>
+      <Filter>Project</Filter>
     </None>
-    <None Include="README.md">
+    <None Include="Rules.ruleset">
       <Filter>Misc</Filter>
     </None>
   </ItemGroup>

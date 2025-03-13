@@ -1,12 +1,13 @@
-#include <__msvc_ostream.hpp>
+// C++ 23
+
 #include <iostream>
 #include <print>
 
 int main() {
 
-  std::print("Hello, World! from std::print\n");
-  std::cout << "Hello, World! from std::cout" << std::endl;
+	std::print("Hello, World! from std::print\n");
+	std::cout << "Hello, World! from std::cout" << std::endl;
 
-  std::cin.get();
-  return 0;
+	std::cin.get();
+	return 0;
 }

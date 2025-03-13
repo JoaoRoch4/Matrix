@@ -1,6 +1,8 @@
 #include "Colors.hpp"
+
 #include "Error.hpp"
 #include "MyTypes.hpp"
+
 #include <cstdlib>
 #include <intrin.h>
 #include <iosfwd>
@@ -10,7 +12,9 @@
 #include <string>
 #include <termcolor.hpp>
 
-namespace My {
+const static ColorEnum CeNone = ColorEnum::none;
+const static BackgroundColorEnum BgNone = BackgroundColorEnum::none;
+
 Colors::Colors() noexcept
   : color(ColorEnum::none),
 	backgroundColor(BackgroundColorEnum::none),
@@ -217,9 +221,12 @@ Colors::Colors(const str &ColorReturn, const str &BackgroundReturn) noexcept {
 		return;
 	}
 
-	const bool NotOk =
-		(EmptyColorReturn && EmptyBackgroundReturn && Empty &&
-		 colorDoNotExists && colorBackgroundDoNoExists && bothDoNotExist);
+	const bool NotOk = (EmptyColorReturn &&
+						EmptyBackgroundReturn &&
+						Empty &&
+						colorDoNotExists &&
+						colorBackgroundDoNoExists &&
+						bothDoNotExist);
 	if (NotOk) {
 		std::cout << termcolor::red << "An error has occurred at: " << __FILE__
 				  << " line: " << __LINE__ << termcolor::reset << '\n';
@@ -342,24 +349,24 @@ const bool Colors::bHasBackgroundColor() const {
 
 const bool Colors::bCheckInvalidColor(const ColorEnum &color) noexcept {
 	switch (color) {
-	case My::ColorEnum::none : return false;
-	case My::ColorEnum::reset : return false;
-	case My::ColorEnum::grey : return false;
-	case My::ColorEnum::red : return false;
-	case My::ColorEnum::green : return false;
-	case My::ColorEnum::yellow : return false;
-	case My::ColorEnum::blue : return false;
-	case My::ColorEnum::magenta : return false;
-	case My::ColorEnum::cyan : return false;
-	case My::ColorEnum::white : return false;
-	case My::ColorEnum::bright_grey : return false;
-	case My::ColorEnum::bright_red : return false;
-	case My::ColorEnum::bright_green : return false;
-	case My::ColorEnum::bright_yellow : return false;
-	case My::ColorEnum::bright_blue : return false;
-	case My::ColorEnum::bright_magenta : return false;
-	case My::ColorEnum::bright_cyan : return false;
-	case My::ColorEnum::bright_white : return false;
+	case ColorEnum::none : return false;
+	case ColorEnum::reset : return false;
+	case ColorEnum::grey : return false;
+	case ColorEnum::red : return false;
+	case ColorEnum::green : return false;
+	case ColorEnum::yellow : return false;
+	case ColorEnum::blue : return false;
+	case ColorEnum::magenta : return false;
+	case ColorEnum::cyan : return false;
+	case ColorEnum::white : return false;
+	case ColorEnum::bright_grey : return false;
+	case ColorEnum::bright_red : return false;
+	case ColorEnum::bright_green : return false;
+	case ColorEnum::bright_yellow : return false;
+	case ColorEnum::bright_blue : return false;
+	case ColorEnum::bright_magenta : return false;
+	case ColorEnum::bright_cyan : return false;
+	case ColorEnum::bright_white : return false;
 	default : {
 		std::cout << termcolor::red << "Invalid color passed\n"
 				  << termcolor::reset;
@@ -378,24 +385,24 @@ const bool Colors::bCheckInvalidColor(const ColorEnum &color) noexcept {
 const bool Colors::bCheckInvalidColor(
 	const BackgroundColorEnum &color) noexcept {
 	switch (color) {
-	case My::BackgroundColorEnum::none : return false;
-	case My::BackgroundColorEnum::reset : return false;
-	case My::BackgroundColorEnum::on_grey : return false;
-	case My::BackgroundColorEnum::on_red : return false;
-	case My::BackgroundColorEnum::on_green : return false;
-	case My::BackgroundColorEnum::on_yellow : return false;
-	case My::BackgroundColorEnum::on_blue : return false;
-	case My::BackgroundColorEnum::on_magenta : return false;
-	case My::BackgroundColorEnum::on_cyan : return false;
-	case My::BackgroundColorEnum::on_white : return false;
-	case My::BackgroundColorEnum::on_bright_grey : return false;
-	case My::BackgroundColorEnum::on_bright_red : return false;
-	case My::BackgroundColorEnum::on_bright_green : return false;
-	case My::BackgroundColorEnum::on_bright_yellow : return false;
-	case My::BackgroundColorEnum::on_bright_blue : return false;
-	case My::BackgroundColorEnum::on_bright_magenta : return false;
-	case My::BackgroundColorEnum::on_bright_cyan : return false;
-	case My::BackgroundColorEnum::on_bright_white : return false;
+	case BackgroundColorEnum::none : return false;
+	case BackgroundColorEnum::reset : return false;
+	case BackgroundColorEnum::on_grey : return false;
+	case BackgroundColorEnum::on_red : return false;
+	case BackgroundColorEnum::on_green : return false;
+	case BackgroundColorEnum::on_yellow : return false;
+	case BackgroundColorEnum::on_blue : return false;
+	case BackgroundColorEnum::on_magenta : return false;
+	case BackgroundColorEnum::on_cyan : return false;
+	case BackgroundColorEnum::on_white : return false;
+	case BackgroundColorEnum::on_bright_grey : return false;
+	case BackgroundColorEnum::on_bright_red : return false;
+	case BackgroundColorEnum::on_bright_green : return false;
+	case BackgroundColorEnum::on_bright_yellow : return false;
+	case BackgroundColorEnum::on_bright_blue : return false;
+	case BackgroundColorEnum::on_bright_magenta : return false;
+	case BackgroundColorEnum::on_bright_cyan : return false;
+	case BackgroundColorEnum::on_bright_white : return false;
 	default : {
 		std::cout << termcolor::red << "Invalid Background color passed\n"
 				  << termcolor::reset;
@@ -438,7 +445,8 @@ const ColorEnum &Colors::StringToColorEnum(const str &color) {
 	else {
 		std::cout << termcolor::red << "Invalid color passed\n"
 				  << termcolor::reset;
-		return ColorEnum::none;
+		 
+		return none;
 	}
 }
 
@@ -500,7 +508,7 @@ const str &Colors::strEnumToStream(const ColorEnum &color) {
 
 const str &Colors::strEnumToStream(const BackgroundColorEnum &color) {
 	static strstrn ss {};
-	static str			  result;
+	static str	   result;
 
 	if (color == BackgroundColorEnum::none ||
 		color == BackgroundColorEnum::reset) {
@@ -530,7 +538,8 @@ const str &Colors::strEnumToTxt(const BackgroundColorEnum &BackgroundColor) {
 const bool Colors::bISClassEmpty() noexcept {
 	const bool emptyClass {bHasColor() == false &&
 						   bHasBackgroundColor() == false &&
-						   isLocalized == false && ColorReturnStr.empty() &&
+						   isLocalized == false &&
+						   ColorReturnStr.empty() &&
 						   BackgroundReturnStr.empty()};
 
 	return emptyClass;
@@ -539,7 +548,8 @@ const bool Colors::bISClassEmpty() noexcept {
 const bool Colors::bISClassEmpty(const Colors &c) noexcept {
 	const bool emptyClass {(c.color == ColorEnum::none ||
 							c.backgroundColor == BackgroundColorEnum::none) &&
-						   c.isLocalized == false && c.ColorReturnStr.empty() &&
+						   c.isLocalized == false &&
+						   c.ColorReturnStr.empty() &&
 						   c.BackgroundReturnStr.empty()};
 
 	return emptyClass;
@@ -647,14 +657,22 @@ const Colors *Colors::ColorsPtr(const str &ColorReturn,
 const bool &Colors::bCheckColorExists(const str &Color) {
 	if (Color.empty()) return false;
 
-	const bool ColorExists {
-		((Color == "grey") || (Color == "red") || (Color == "green") ||
-		 (Color == "yellow") || (Color == "blue") || (Color == "magenta") ||
-		 (Color == "cyan") || (Color == "white") || (Color == "bright_grey") ||
-		 (Color == "bright_red") || (Color == "bright_green") ||
-		 (Color == "bright_yellow") || (Color == "bright_blue") ||
-		 (Color == "bright_magenta") || (Color == "bright_cyan") ||
-		 (Color == "bright_white"))};
+	const bool ColorExists {((Color == "grey") ||
+							 (Color == "red") ||
+							 (Color == "green") ||
+							 (Color == "yellow") ||
+							 (Color == "blue") ||
+							 (Color == "magenta") ||
+							 (Color == "cyan") ||
+							 (Color == "white") ||
+							 (Color == "bright_grey") ||
+							 (Color == "bright_red") ||
+							 (Color == "bright_green") ||
+							 (Color == "bright_yellow") ||
+							 (Color == "bright_blue") ||
+							 (Color == "bright_magenta") ||
+							 (Color == "bright_cyan") ||
+							 (Color == "bright_white"))};
 
 	if (ColorExists == true) return true;
 	else return false;
@@ -663,19 +681,22 @@ const bool &Colors::bCheckColorExists(const str &Color) {
 const bool &Colors::bCheckBackgroundExists(const str &BackgroundColor) {
 	if (BackgroundColor.empty()) return false;
 
-	const bool BackgroundExists {
-		(BackgroundColor == "on_grey") || (BackgroundColor == "on_red") ||
-		(BackgroundColor == "on_green") || (BackgroundColor == "on_yellow") ||
-		(BackgroundColor == "on_blue") || (BackgroundColor == "on_magenta") ||
-		(BackgroundColor == "on_cyan") || (BackgroundColor == "on_white") ||
-		(BackgroundColor == "on_bright_grey") ||
-		(BackgroundColor == "on_bright_red") ||
-		(BackgroundColor == "on_bright_green") ||
-		(BackgroundColor == "on_bright_yellow") ||
-		(BackgroundColor == "ton_bright_blue") ||
-		(BackgroundColor == "on_bright_magenta") ||
-		(BackgroundColor == "on_bright_cyan") ||
-		(BackgroundColor == "on_bright_white")};
+	const bool BackgroundExists {(BackgroundColor == "on_grey") ||
+								 (BackgroundColor == "on_red") ||
+								 (BackgroundColor == "on_green") ||
+								 (BackgroundColor == "on_yellow") ||
+								 (BackgroundColor == "on_blue") ||
+								 (BackgroundColor == "on_magenta") ||
+								 (BackgroundColor == "on_cyan") ||
+								 (BackgroundColor == "on_white") ||
+								 (BackgroundColor == "on_bright_grey") ||
+								 (BackgroundColor == "on_bright_red") ||
+								 (BackgroundColor == "on_bright_green") ||
+								 (BackgroundColor == "on_bright_yellow") ||
+								 (BackgroundColor == "ton_bright_blue") ||
+								 (BackgroundColor == "on_bright_magenta") ||
+								 (BackgroundColor == "on_bright_cyan") ||
+								 (BackgroundColor == "on_bright_white")};
 
 	if (BackgroundExists == true) return true;
 	return false;
@@ -1139,7 +1160,7 @@ const str &Colors::errStr_strDefaultCase(const str &msg) {
 	__debugbreak();
 	SetClassColor(ColorEnum::reset);
 	StaticError::Print(msg);
-	const str &none ("none");
+	const str &none("none");
 	return none;
 }
 
@@ -1190,4 +1211,3 @@ Colors::~Colors() {
 	isLocalized		  = false;
 	InitializerCalled = false;
 }
-} // namespace My

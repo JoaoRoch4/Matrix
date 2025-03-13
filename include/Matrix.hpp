@@ -1,8 +1,11 @@
 #pragma once
 
+
+
 #include "Error.hpp"
 #include "MyTypes.hpp"
 #include "Random.hpp"
+
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -11,17 +14,16 @@
 #include <utility>
 #include <vector>
 
-class MatrixVec;
+
 
 class Matrix {
-
-	friend MatrixVec;
 
 	using vPar	  = vec<PAR<vec<ld>, vec<ld>>>;
 	using vParPtr = sptr<vec<PAR<vec<ld>, vec<ld>>>>;
 	using vLdPar  = PAR<vec<ld>, vec<ld>>;
 
 protected:
+
 	size_t	m_iRows;
 	size_t	m_iCols;
 	vec<ld> m_vRows;
@@ -31,6 +33,7 @@ protected:
 	vParPtr m_vParPtr_Matrix;
 
 public:
+
 	// Default constructor
 	Matrix() noexcept;
 
@@ -71,9 +74,10 @@ public:
 };
 
 template <typename Type>
-class Matrix_T {
+class Matrix_T : public Matrix {
 
 private:
+
 	bool			  M_bCalled;
 	UptrRand		  M_Rand;
 	size_t			  M_iRows;
@@ -85,6 +89,7 @@ private:
 	Matrix2d		  M_Matrix;
 
 public:
+
 	/** Default constructor
 	 * Initializes the random number generator and a random matrix.
 	 */
@@ -104,6 +109,7 @@ public:
 			 vec<Type> &Vec2);
 
 protected:
+
 	void Start();
 
 	void Fill(bool bDelete_vectors = true);
@@ -120,6 +126,7 @@ protected:
 	}
 
 public:
+
 	__forceinline void SetRows(const Type &Rows) noexcept { M_iRows = Rows; }
 	__forceinline Type GetRows() const noexcept { return M_iRows; }
 
@@ -221,7 +228,7 @@ inline Matrix_T<Type>::Matrix_T(const int Rows, const int Cols,
 	M_iRows	 = Rows;
 	M_iCols	 = Cols;
 	M_Matrix = nullptr;
-	CheckPtr(M_Matrix);
+	// UNDONE CheckPtr(M_Matrix);
 }
 
 template <typename Type>
@@ -318,7 +325,7 @@ inline void Matrix_T<Type>::Fill(bool bDelete_vectors) {
 	M_Matrix->reserve(size);
 	M_Matrix->push_back(M_iiVecPair.back());
 
-	CheckPtr(M_Matrix.get());
+	// undone CheckPtr(M_Matrix);
 
 	if (bDelete_vectors)
 		return delete_vectors(M_VecCows, M_VecCols, M_iiVecPair);
@@ -346,14 +353,14 @@ void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
 
 	UptrRand rand = Random().GetrdUptr();
 
-	auto FillVec1 = [&VecSize1, &vec1, &rand, &func]() -> void {
+	auto FillVec1 = [&VecSize1, &vec1, &rand]() -> void {
 		for (size_t i = 0; i < VecSize1; ++i) {
 
 			if (rand)
 				vec1.push_back(rand->GetRandomAny<Type>(numCap<Type>::max()));
 			else {
 				const str &msg = str("Error: Random number generator is "
-									 "null." func __FUNCTION__ "\n at Line: " +
+									 "null." __FUNCTION__ "\n at Line: " +
 									 __LINE__);
 
 				std::cerr << msg;
@@ -362,14 +369,14 @@ void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
 		}
 	};
 
-	auto FiilVec2 = [&VecSize2, &vec2, &rand, &func]() -> void {
+	auto FiilVec2 = [&VecSize2, &vec2, &rand]() -> void {
 		for (size_t i = 0; i < VecSize2; ++i) {
 
 			if (rand)
 				vec2.push_back(rand->GetRandomAny<Type>(numCap<Type>::max()));
 			else {
 				const str &msg = str("Error: Random number generator is "
-									 "null." func __FUNCTION__ "\n at Line: " +
+									 "null." __FUNCTION__ "\n at Line: " +
 									 __LINE__);
 
 				std::cerr << msg;
@@ -425,7 +432,7 @@ void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
 				vec2.push_back(rand->GetRandomAny<Type>(vec2Min, vec2Max));
 			else {
 				const str &msg = str("Error: Random number generator is "
-									 "null." func __FUNCTION__ "\n at Line: " +
+									 "null." __FUNCTION__ "\n at Line: " +
 									 __LINE__);
 
 				std::cerr << msg;
@@ -518,3 +525,5 @@ inline void Matrix_T<Type>::printMatrix() {
 		std::print("\n");
 	}
 }
+
+

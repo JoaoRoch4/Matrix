@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Error.hpp"
 #include "Random.hpp"
-#include <__msvc_ostream.hpp>
-#include <any>
+
+
 #include <array>
 #include <chrono>
 #include <exception>
@@ -11,16 +10,11 @@
 #include <iostream>
 #include <limits>
 #include <memory>
-#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
+#include <any>
 
-#ifdef __INTELLISENSE__
-#pragma push
-#pragma diag_suppress 0017
-#pragma warning(disable : VCIC001)
-#endif
 
 #define CnExcpt	   const noexcept
 #define CExprExcpt constexpr noexcept
@@ -28,26 +22,18 @@
 #define INLN		 inline
 #define INLNCEXPR	 constexpr __forceinline
 #define CLEAR_SCREEN "\033[2J\033[1;1H"
+#define Make_uptr	 std::make_unique
+#define mk_unq		 std::make_unique
+#define Make_sptr	 std::make_shared
+#define mk_sptr		 std::make_shared
 
 using str	  = std::string;
 using ostr	  = std::ostream;
 using istr	  = std::istream;
 using strstrn = std::stringstream;
 
-#define CheckPtr(Ptr)                                                   \
-	if (Ptr == nullptr) {                                               \
-		const str &__msg {str("Error:"##Ptr                             \
-							  "is null. " __FUNCTION__ "\n at Line: " + \
-							  ##__LINE__)};                             \
-		Error	   err;                                                 \
-		err.Exit(__msg);                                                \
-	}
-
 using ANY = std::any;
 
-using vPar	  = vec<PAR<vec<ld>, vec<ld>>>;
-using vParPtr = sptr<vec<PAR<vec<ld>, vec<ld>>>>;
-using vLdPar  = PAR<vec<ld>, vec<ld>>;
 // signed long long 64-bits interger.
 // Ocuppies 8 bytes.
 // Ranges from
@@ -86,14 +72,15 @@ using big_cvu = const volatile unsigned long long;
 // Ranges from -128 to 127.
 using BYTES = signed char;
 
-// const signed 8-bits constant char. Ocuppies 1 BYTES. Ranges from -128 to 127.
-// similar to cc
+// const signed 8-bits constant char. Ocuppies 1 BYTES. Ranges from -128 to
+// 127. similar to cc
 using BYTES_c = const signed char;
 
 // unsigned 8-bits char. Ocuppies 1 BYTES. Ranges from 0 to 255.
 using BYTES_u = unsigned char;
 
-// const unsigned 8-bits constant char. Ocuppies 1 BYTES. Ranges from 0 to 255.
+// const unsigned 8-bits constant char. Ocuppies 1 BYTES. Ranges from 0 to
+// 255.
 using BYTES_cu = const unsigned char;
 
 using BYTES_v = volatile signed char;
@@ -104,8 +91,8 @@ using BYTES_vu = volatile unsigned char;
 
 using BYTES_cvu = const volatile unsigned char;
 
-// signed 16-bits wide char. Ocuppies 2 BYTESs. Ranges from -32.768 to 32.767.
-// similar to short
+// signed 16-bits wide char. Ocuppies 2 BYTESs. Ranges from -32.768
+// to 32.767. similar to short
 using BYTESW = wchar_t;
 
 using BYTESW_v = volatile wchar_t;
@@ -117,9 +104,8 @@ using BYTESW_c = const wchar_t;
 
 using BYTESW_vc = const volatile wchar_t;
 
-// const signed 8-bits constant char. Ocuppies 1 byte however changes with use.
-// Ranges from -128 to 127.
-// similar to byte_c
+// const signed 8-bits constant char. Ocuppies 1 byte however changes with
+// use. Ranges from -128 to 127. similar to byte_c
 using cc	= signed const char;
 using cc_v	= volatile signed const char;
 using c_uc	= unsigned const char;
@@ -243,11 +229,6 @@ using VecStr = vec<str>;
 template <class T, class Deleter = std::default_delete<T>>
 using uptr = std::unique_ptr<T, Deleter>;
 
-#define Make_uptr std::make_unique
-#define mk_unq	  std::make_unique
-#define Make_sptr std::make_shared
-#define mk_sptr	  std::make_shared
-
 template <class T>
 using sptr = std::shared_ptr<T>;
 
@@ -269,6 +250,10 @@ using Matrix2d2 = VPars<T1, T2>;
 template <typename T1, typename T2>
 using Matrix2d2_uptr = uptr<VPars<T1, T2>>;
 
+using vPar	  = vec<PAR<vec<ld>, vec<ld>>>;
+using vParPtr = sptr<vec<PAR<vec<ld>, vec<ld>>>>;
+using vLdPar  = PAR<vec<ld>, vec<ld>>;
+
 template <class T>
 using numCap = std::numeric_limits<T>;
 
@@ -279,4 +264,12 @@ using VecPar   = vec<PAR<vCols, vRows>>;
 using Matrix2d = uptr<VecPar>;
 
 // Clear the screen.
-inline void __CLS() { std::cout << CLEAR_SCREEN << std::endl; }
+
+class MyTypes {
+
+public:
+
+	inline void __CLS() { std::cout << CLEAR_SCREEN << std::endl; }
+};
+
+// 
