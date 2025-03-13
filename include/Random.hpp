@@ -47,9 +47,9 @@ public:
 	// Assignment pointer operator
 	Random &operator*(Random *OtherPtr) noexcept { return *this; }
 
-	__forceinline Random  GetRandom() const noexcept { return *this; }
-	__forceinline Random &GetRandomRef() noexcept { return *this; }
-	__forceinline Random *GetRandomPtr() noexcept { return this; }
+	inline Random  GetRandom() const noexcept { return *this; }
+	inline Random &GetRandomRef() noexcept { return *this; }
+	inline Random *GetRandomPtr() noexcept { return this; }
 
 	const long double GetRandomNum() noexcept;
 

@@ -21,6 +21,18 @@
     <Filter Include="Project">
       <UniqueIdentifier>{421f5313-c073-40af-8946-685a6a6d4896}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Rules">
+      <UniqueIdentifier>{3a6aec7e-f848-4e6c-bd66-183de5dcb4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asm">
+      <UniqueIdentifier>{8e3c5daa-281e-4a6b-bff5-a7cd50807a34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{b060070b-8344-4f79-8b3b-969aa7d99b93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vcpkg">
+      <UniqueIdentifier>{5b2f3d47-d35d-429b-acd3-1ad195a8da73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Colors.cpp">
@@ -88,7 +100,39 @@
       <Filter>Project</Filter>
     </None>
     <None Include="Rules.ruleset">
-      <Filter>Misc</Filter>
+      <Filter>Rules</Filter>
     </None>
+    <None Include="Matrix\x64\MyConfigDebug\Colors.asm">
+      <Filter>Asm</Filter>
+    </None>
+    <None Include="Matrix\x64\MyConfigDebug\Main.asm">
+      <Filter>Asm</Filter>
+    </None>
+    <None Include="Matrix\x64\MyConfigDebug\Error.asm">
+      <Filter>Asm</Filter>
+    </None>
+    <None Include="Matrix\x64\MyConfigDebug\Matrix.asm">
+      <Filter>Asm</Filter>
+    </None>
+    <None Include="Matrix\x64\MyConfigDebug\Random.asm">
+      <Filter>Asm</Filter>
+    </None>
+    <None Include="Matrix\x64\MyConfigDebug\std.asm">
+      <Filter>Asm</Filter>
+    </None>
+    <None Include="Matrix\x64\MyConfigDebug\std.compat.asm">
+      <Filter>Asm</Filter>
+    </None>
+    <None Include="vcpkg.json">
+      <Filter>Vcpkg</Filter>
+    </None>
+    <None Include="vcpkg-configuration.json">
+      <Filter>Vcpkg</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Matrix\x64\MyConfigDebug\Matrix.log">
+      <Filter>Log</Filter>
+    </Text>
   </ItemGroup>
 </Project>
