@@ -8,6 +8,14 @@ AlignConsecutiveBitFields:      Consecutive
 AlignConsecutiveDeclarations:   Consecutive
 AlignConsecutiveMacros:         Consecutive
 
+AlignConsecutiveShortCaseStatements:
+ Enabled: true
+ AcrossEmptyLines: true
+ AcrossComments: true
+ AlignCaseArrows: true
+ AlignCaseColons: true
+
+
 AlignEscapedNewlines: Left
 AlignOperands: DontAlign
 AlignTrailingComments: true
@@ -116,8 +124,8 @@ IncludeCategories:
     CaseSensitive: false
 IncludeIsMainRegex: (Test)?$
 IncludeIsMainSourceRegex: ''
-IndentCaseBlocks: false
-IndentCaseLabels: false
+IndentCaseBlocks: true
+IndentCaseLabels: true
 IndentExternBlock: NoIndent
 IndentGotoLabels: true
 IndentPPDirectives: None
@@ -144,12 +152,12 @@ ObjCSpaceBeforeProtocolList: true
 PenaltyBreakAssignment: 2
 PenaltyBreakBeforeFirstCallParameter: 19
 PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
+PenaltyBreakFirstLessLess: 10000
 PenaltyBreakString: 1000
 PenaltyBreakTemplateDeclaration: 0
-PenaltyExcessCharacter: 1000000
+PenaltyExcessCharacter: 100
 PenaltyIndentedWhitespace: 0
-PenaltyReturnTypeOnItsOwnLine: 1000000
+PenaltyReturnTypeOnItsOwnLine: 0
 PointerAlignment: Right
 RawStringFormats: 
   - Language: Cpp
