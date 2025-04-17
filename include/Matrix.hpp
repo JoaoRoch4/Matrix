@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Error.hpp"
 #include "MyTypes.hpp"
 #include "Random.hpp"
+
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -22,7 +22,7 @@ protected:
 	size_t	m_iRows;
 	size_t	m_iCols;
 	vec<ld> m_vRows;
-	vec<ld> m_Vcols;
+	vec<ld> m_vCols;
 	vLdPar	m_vPar_RowsCols;
 	vPar	m_vPar_Matrix;
 	vParPtr m_vParPtr_Matrix;
@@ -36,7 +36,7 @@ public:
 	Matrix(const size_t &Rows, const size_t &Cols) noexcept;
 
 	Matrix(const size_t &m_iRows, const size_t &m_iCols, const vec<ld> &m_vRows,
-		   const vec<ld> &m_Vcols, const vLdPar &m_vPar_RowsCols,
+		   const vec<ld> &m_vCols, const vLdPar &m_vPar_RowsCols,
 		   const vPar &m_vPar_Matrix, const vParPtr &m_vParPtr_Matrix) noexcept;
 
 	Matrix(const Matrix &Matrix) noexcept = default;
@@ -47,7 +47,7 @@ public:
 	INLN size_t GetRows() CnExcpt { return m_iRows; }
 	INLN size_t GetCols() CnExcpt { return m_iCols; }
 	INLN vec<ld> GetM_vRows() CnExcpt { return m_vRows; }
-	INLN vec<ld> GetM_vCols() CnExcpt { return m_Vcols; }
+	INLN vec<ld> GetM_vCols() CnExcpt { return m_vCols; }
 	INLN vLdPar	 GetM_vPar_RowsCols() CnExcpt { return m_vPar_RowsCols; }
 	INLN vPar	 GetM_vPar_Matrix() CnExcpt { return m_vPar_Matrix; }
 	INLN vParPtr GetM_vParPtr_Matrix() CnExcpt { return m_vParPtr_Matrix; }
@@ -56,7 +56,7 @@ public:
 	INLN void SetGetRows(const size_t &iRows) noexcept { m_iRows = iRows; }
 	INLN void SetCols(const size_t &iCols) noexcept { m_iCols = iCols; }
 	INLN void SetM_vRows(const vec<ld> &vRows) noexcept { m_vRows = vRows; }
-	INLN void SetM_vCols(const vec<ld> &vCols) noexcept { m_Vcols = vCols; }
+	INLN void SetM_vCols(const vec<ld> &vCols) noexcept { m_vCols = vCols; }
 	INLN void SetM_vPar_RowsCols(const vLdPar &RowsCols) noexcept {
 		m_vPar_RowsCols = RowsCols;
 	}

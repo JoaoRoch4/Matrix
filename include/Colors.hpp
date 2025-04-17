@@ -78,14 +78,14 @@ public:
 	// copy constructor with shared_ptr
 	Colors(const class std::shared_ptr<Colors> &ptr) noexcept;
 
-protected:
+private:
 
 	CEnum  color;
 	BgEnum backgroundColor;
 	str	   ColorReturnStr;
 	str	   BackgroundReturnStr;
 	bool   isLocalized;
-	bool   InitializerCalled = false;
+	bool   InitializerCalled;
 
 public:
 
@@ -107,6 +107,7 @@ public:
 	bool   bCheckColorExists(const ColorEnum &Color);
 	bool   bCheckBgExists(const BgEnum &BgColor);
 	bool   bCheckBgExists(const str &BgColor);
+
 	CEnum  CnumCheckColorExists(const str &Color);
 	CEnum  CnumCheckColorExists(const ColorEnum &Color);
 	BgEnum BgNumCheckBgColorExists(const str &BgColor);
@@ -149,7 +150,7 @@ protected:
 	str strEnumToText(const ColorEnum &color);
 	str strEnumToText(const BackgroundColorEnum &color);
 
-	str strEnumToStream(const ColorEnum &color);
+	std::ostream strEnumToStream(const ColorEnum &color);
 	str strEnumToStream(const BackgroundColorEnum &color);
 
 	bool bISClassEmpty() noexcept;
@@ -160,10 +161,14 @@ public:
 	inline void ResetColor() noexcept;
 	inline void	ResetBackgroundColor() noexcept;
 
-	const std::ostream &Print(const str		  &msg,
+	void Print(const str &msg,
 							  const ColorEnum &color = ColorEnum::reset);
 
-	str UseColor(const ColorEnum &color);
+	void PrintColor(const ColorEnum &color);
+	void
+	PrintMsgColor(const str &msg, const ColorEnum &color, const bool& reset = false);
+
+	std::streambuf UseColor(const ColorEnum &color);
 	str UseColor(const BackgroundColorEnum &color);
 
 	str UseBackgroundColor(const BackgroundColorEnum &color);

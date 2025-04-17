@@ -108,7 +108,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
-    <WindowsMetadataLinkKeyFile>$(IntDir)$(TargetName).winmd</WindowsMetadataLinkKeyFile>
+    <WindowsMetadataLinkKeyFile>
+    </WindowsMetadataLinkKeyFile>
     <CopyLocalDeploymentContent>false</CopyLocalDeploymentContent>
     <CopyLocalProjectReference>false</CopyLocalProjectReference>
     <CopyLocalDebugSymbols>false</CopyLocalDebugSymbols>
@@ -215,23 +216,27 @@
       <GenerateSourceDependencies>false</GenerateSourceDependencies>
       <ErrorReporting>Send</ErrorReporting>
       <OpenMPSupport>true</OpenMPSupport>
+      <AdditionalIncludeDirectories>$(include_dir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalModuleDependencies>$(src_dir);%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <ShowProgress>LinkVerbose</ShowProgress>
-      <RegisterOutput>true</RegisterOutput>
+      <ShowProgress>NotSet</ShowProgress>
+      <RegisterOutput>false</RegisterOutput>
       <LargeAddressAware>true</LargeAddressAware>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <WindowsMetadataFile>$(IntDir)$(TargetName).winmd</WindowsMetadataFile>
-      <WindowsMetadataLinkDelaySign>true</WindowsMetadataLinkDelaySign>
+      <WindowsMetadataFile>
+      </WindowsMetadataFile>
+      <WindowsMetadataLinkDelaySign>false</WindowsMetadataLinkDelaySign>
       <LinkErrorReporting>SendErrorReport</LinkErrorReporting>
       <AssemblyDebug>true</AssemblyDebug>
       <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>$(ProjectName)</MapFileName>
-      <MapExports>true</MapExports>
-      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <MapFileName>
+      </MapFileName>
+      <MapExports>false</MapExports>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <Manifest />
   </ItemDefinitionGroup>
