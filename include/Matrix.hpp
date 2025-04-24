@@ -2,7 +2,7 @@
 
 #include "MyTypes.hpp"
 #include "Random.hpp"
-
+#include <concepts>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -11,43 +11,127 @@
 #include <utility>
 #include <vector>
 
+//
+// Proxy that represents one row of the matrix
+//
+class MatrixRowProxy {
+
+	vec<vec<long long>> &m_data;
+	unsigned long long	 m_row;
+
+public:
+
+	MatrixRowProxy(vec<vec<long long>> &data, unsigned long long row)
+	  : m_data(data), m_row(row) {}
+
+	// Non-const access using concepts
+	long long &operator[](std::integral auto col) {
+		return m_data[m_row][static_cast<unsigned long long>(col)];
+	}
+
+	// Const access using concepts
+	const long long &operator[](std::integral auto col) const {
+		return m_data[m_row][static_cast<unsigned long long>(col)];
+	}
+};
+
 class Matrix {
 
 	using vPar	  = vec<PAR<vec<ld>, vec<ld>>>;
 	using vParPtr = sptr<vec<PAR<vec<ld>, vec<ld>>>>;
 	using vLdPar  = PAR<vec<ld>, vec<ld>>;
+	using vLlPar  = PAR<vec<ll>, vec<ll>>;
 
 protected:
 
-	size_t	m_iRows;
-	size_t	m_iCols;
-	vec<ld> m_vRows;
-	vec<ld> m_vCols;
-	vLdPar	m_vPar_RowsCols;
-	vPar	m_vPar_Matrix;
-	vParPtr m_vParPtr_Matrix;
+	size_t		   m_iRows;
+	size_t		   m_iCols;
+	vec<long long> m_vRows;
+	vec<long long> m_vCols;
+	vLlPar		   m_vPar_RowsCols;
+	vPar		   m_vPar_Matrix;
+	vParPtr		   m_vParPtr_Matrix;
 
 public:
 
 	// Default constructor
 	Matrix() noexcept;
 
+	// Copy constructor
+	Matrix(const Matrix &other) noexcept;
+
 	// Parameter constructor
 	Matrix(const size_t &Rows, const size_t &Cols) noexcept;
 
-	Matrix(const size_t &m_iRows, const size_t &m_iCols, const vec<ld> &m_vRows,
-		   const vec<ld> &m_vCols, const vLdPar &m_vPar_RowsCols,
-		   const vPar &m_vPar_Matrix, const vParPtr &m_vParPtr_Matrix) noexcept;
+	// Constructor with all parameters
+	Matrix(const size_t &m_iRows, const size_t &m_iCols, const vec<ld> &m_vRows, const vec<ld> &m_vCols, const vLdPar &m_vPar_RowsCols, const vPar &m_vPar_Matrix, const vParPtr &m_vParPtr_Matrix) noexcept;
 
-	Matrix(const Matrix &Matrix) noexcept = default;
+	// Move constructor
+	Matrix(Matrix &&Matrix) noexcept;
 
-	Matrix(Matrix &&Matrix) noexcept = default;
+	// Copy assignment operator
+	Matrix operator=(const Matrix obj) noexcept;
+	// Reference assignment operator
+	Matrix &operator=(const Matrix &obj) noexcept;
+
+	// const Copy assignment operator
+	const Matrix operator=(const Matrix obj) const noexcept;
+	// const Reference assignment operator
+	const Matrix &operator=(const Matrix &obj) const noexcept;
+
+	// array subscript copy operator
+	template <typename ret, typename arg>
+	ret operator[](arg index) noexcept {}
+	// array subscript reference operator
+	template <typename ret, typename arg>
+	ret &operator[](arg &index) noexcept {}
+
+	// const array subscript copy operator
+	template <typename ret, typename arg>
+	const ret operator[](arg index) const noexcept {}
+
+	// const array subscript reference operator
+	template <typename ret, typename arg>
+	const ret &operator[](arg &index) const noexcept {}
 
 	// getters
-	INLN size_t GetRows() CnExcpt { return m_iRows; }
-	INLN size_t GetCols() CnExcpt { return m_iCols; }
-	INLN vec<ld> GetM_vRows() CnExcpt { return m_vRows; }
-	INLN vec<ld> GetM_vCols() CnExcpt { return m_vCols; }
+	template <typename num = long long>
+	INLN num GetRows() CnExcpt {
+		if constexpr (typeid(num) != typeid(long long)) {
+			num newV = static_cast<num>(m_iRows);
+			return newV;
+		}
+		return m_iRows;
+	}
+
+	template <typename num = long long>
+	INLN num GetCols() CnExcpt {
+		if constexpr (typeid(num) != typeid(long long)) {
+			num newV = static_cast<num>(m_iCols);
+			return newV;
+		}
+		return m_iCols;
+	}
+
+	template <typename num = long long>
+	INLN vec<num> GetM_vRows() CnExcpt {
+
+		if constexpr (typeid(num) != typeid(long long)) {
+			vec<num> newVec = static_cast<vec<num>>(m_vRows);
+			return newVec;
+		}
+		return m_vRows;
+	}
+
+	template <typename num = long long>
+	INLN vec<num> GetM_vCols() CnExcpt {
+		if constexpr (typeid(num) != typeid(long long)) {
+			vec<num> newVec = static_cast<vec<num>>(m_iCols);
+			return newVec;
+		}
+		return m_iCols;
+	}
+
 	INLN vLdPar	 GetM_vPar_RowsCols() CnExcpt { return m_vPar_RowsCols; }
 	INLN vPar	 GetM_vPar_Matrix() CnExcpt { return m_vPar_Matrix; }
 	INLN vParPtr GetM_vParPtr_Matrix() CnExcpt { return m_vParPtr_Matrix; }
@@ -100,8 +184,7 @@ public:
 	Matrix_T(const int Rows, const int Cols, bool bDelete_vectors = false);
 
 	// Constructor with Rows and Cols parameters also vectors
-	Matrix_T(const size_t Rows, const size_t Cols, vec<Type> &Vec1,
-			 vec<Type> &Vec2);
+	Matrix_T(const size_t Rows, const size_t Cols, vec<Type> &Vec1, vec<Type> &Vec2);
 
 protected:
 
@@ -109,8 +192,7 @@ protected:
 
 	void Fill(bool bDelete_vectors = true);
 	void Fill(const Type Rows, const Type Cols, bool bDelete_vectors = true);
-	void Fill(const size_t Rows, const size_t Cols, vec<Type> &vec1,
-			  vec<Type> &vec2, bool bDelete_vectors = true);
+	void Fill(const size_t Rows, const size_t Cols, vec<Type> &vec1, vec<Type> &vec2, bool bDelete_vectors = true);
 
 	template <typename... Vectors>
 	inline void delete_vectors(Vectors &...vecs) {
@@ -134,18 +216,11 @@ public:
 
 	UptrRand &GetRandom() noexcept { return M_Rand; }
 
-	void fillVectors(vec<Type> &vec1, const size_t VecSize1, vec<Type> &vec2,
-					 const size_t VecSize2);
+	void fillVectors(vec<Type> &vec1, const size_t VecSize1, vec<Type> &vec2, const size_t VecSize2);
 
-	void fillVectors(vec<Type> &vec1, const size_t VecSize1,
-					 const size_t vec1Min, const size_t vec1Max,
-					 vec<Type> &vec2, const size_t VecSize2,
-					 const size_t vec2Min, const size_t vec2Max);
+	void fillVectors(vec<Type> &vec1, const size_t VecSize1, const size_t vec1Min, const size_t vec1Max, vec<Type> &vec2, const size_t VecSize2, const size_t vec2Min, const size_t vec2Max);
 
-	void fillVectors(vec<Type> &vec1, const size_t VecSize1,
-					 const float vec1Min, const float vec1Max, vec<Type> &vec2,
-					 const size_t VecSize2, const float vec2Min,
-					 const float vec2Max);
+	void fillVectors(vec<Type> &vec1, const size_t VecSize1, const float vec1Min, const float vec1Max, vec<Type> &vec2, const size_t VecSize2, const float vec2Min, const float vec2Max);
 
 	bool operator==(const Matrix_T &other) const = default;
 
@@ -159,15 +234,7 @@ public:
 
 template <typename Type>
 inline Matrix_T<Type>::Matrix_T() noexcept
-  : M_bCalled(false),
-	M_Rand(mk_unq<Random>()),
-	M_iRows(1),
-	M_iCols(1),
-	M_VecCows(vec<Type>()),
-	M_VecCols(vec<Type>()),
-	M_iiVecPair(VPars<Type, Type>()),
-	M_VecPar(VecPar()),
-	M_Matrix(mk_unq<VecPar>(M_VecPar)) {}
+  : M_bCalled(false), M_Rand(mk_unq<Random>()), M_iRows(1), M_iCols(1), M_VecCows(vec<Type>()), M_VecCols(vec<Type>()), M_iiVecPair(VPars<Type, Type>()), M_VecPar(VecPar()), M_Matrix(mk_unq<VecPar>(M_VecPar)) {}
 
 template <typename Type>
 inline void Matrix_T<Type>::Start() {
@@ -184,8 +251,7 @@ inline void Matrix_T<Type>::Start() {
 }
 
 template <typename Type>
-inline Matrix_T<Type>::Matrix_T(const Matrix_T &other,
-								const bool		bDelete_vectors) {
+inline Matrix_T<Type>::Matrix_T(const Matrix_T &other, const bool bDelete_vectors) {
 
 	M_iRows		= other.M_iRows;
 	M_iCols		= other.M_iCols;
@@ -196,8 +262,8 @@ inline Matrix_T<Type>::Matrix_T(const Matrix_T &other,
 
 	if (other.M_Matrix) *M_Matrix = *other.M_Matrix;
 	else {
-		const str &msg = str(
-			"Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
+		const str &msg =
+			str("Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
 		std::cerr << msg;
 		throw std::runtime_error(msg);
 	}
@@ -211,8 +277,7 @@ inline Matrix_T<Type>::Matrix_T(const bool bFill, const bool bDelete_vectors)
 }
 
 template <typename Type>
-inline Matrix_T<Type>::Matrix_T(const int Rows, const int Cols,
-								bool bDelete_vectors)
+inline Matrix_T<Type>::Matrix_T(const int Rows, const int Cols, bool bDelete_vectors)
   : Matrix_T(true) {
 
 	M_iRows	 = Rows;
@@ -222,8 +287,7 @@ inline Matrix_T<Type>::Matrix_T(const int Rows, const int Cols,
 }
 
 template <typename Type>
-Matrix_T<Type>::Matrix_T(const size_t Rows, const size_t Cols, vec<Type> &Vec1,
-						 vec<Type> &Vec2)
+Matrix_T<Type>::Matrix_T(const size_t Rows, const size_t Cols, vec<Type> &Vec1, vec<Type> &Vec2)
   : Matrix_T(true) {
 
 	M_iRows	  = Rows;
@@ -233,8 +297,7 @@ Matrix_T<Type>::Matrix_T(const size_t Rows, const size_t Cols, vec<Type> &Vec1,
 }
 
 template <typename Type>
-inline void Matrix_T<Type>::Fill(const Type Rows, const Type Cols,
-								 bool bDelete_vectors) {
+inline void Matrix_T<Type>::Fill(const Type Rows, const Type Cols, bool bDelete_vectors) {
 
 	fillVectors(M_VecCows, M_iRows, M_VecCols, M_iCols);
 
@@ -249,8 +312,8 @@ inline void Matrix_T<Type>::Fill(const Type Rows, const Type Cols,
 
 	if (M_Matrix == nullptr) {
 
-		const str &msg = str(
-			"Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
+		const str &msg =
+			str("Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
 
 		std::cerr << msg;
 		throw std::runtime_error(msg);
@@ -260,9 +323,7 @@ inline void Matrix_T<Type>::Fill(const Type Rows, const Type Cols,
 }
 
 template <typename Type>
-inline void Matrix_T<Type>::Fill(const size_t Rows, const size_t Cols,
-								 vec<Type> &vec1, vec<Type> &vec2,
-								 bool bDelete_vectors) {
+inline void Matrix_T<Type>::Fill(const size_t Rows, const size_t Cols, vec<Type> &vec1, vec<Type> &vec2, bool bDelete_vectors) {
 
 	M_iRows = Rows;
 	M_iCols = Cols;
@@ -280,8 +341,8 @@ inline void Matrix_T<Type>::Fill(const size_t Rows, const size_t Cols,
 
 	if (M_Matrix == nullptr) {
 
-		const str &msg = str(
-			"Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
+		const str &msg =
+			str("Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
 
 		std::cerr << msg;
 		throw std::runtime_error(msg);
@@ -326,8 +387,8 @@ inline void Matrix_T<Type>::GetMatrix() {
 
 	if (M_Matrix == nullptr) {
 
-		const str &msg = str(
-			"Error: Matrix is null. " __FUNCTION__ "\n at Line: " + __LINE__);
+		const str &msg =
+			str("Error: Matrix is null. " __FUNCTION__ "\n at Line: " + __LINE__);
 
 		std::cerr << msg;
 		throw std::runtime_error(msg);
@@ -335,8 +396,7 @@ inline void Matrix_T<Type>::GetMatrix() {
 }
 
 template <typename Type>
-void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
-								 vec<Type> &vec2, const size_t VecSize2) {
+void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1, vec<Type> &vec2, const size_t VecSize2) {
 
 	vec1.reserve(VecSize1);
 	vec2.reserve(VecSize2);
@@ -386,10 +446,7 @@ void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
 }
 
 template <typename Type>
-void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
-								 const size_t vec1Min, const size_t vec1Max,
-								 vec<Type> &vec2, const size_t VecSize2,
-								 const size_t vec2Min, const size_t vec2Max) {
+void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1, const size_t vec1Min, const size_t vec1Max, vec<Type> &vec2, const size_t VecSize2, const size_t vec2Min, const size_t vec2Max) {
 
 	vec1.reserve(VecSize1);
 	vec2.reserve(VecSize2);
@@ -442,12 +499,7 @@ void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
 }
 
 template <typename Type>
-inline void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1,
-										const float vec1Min,
-										const float vec1Max, vec<Type> &vec2,
-										const size_t VecSize2,
-										const float	 vec2Min,
-										const float	 vec2Max) {
+inline void Matrix_T<Type>::fillVectors(vec<Type> &vec1, const size_t VecSize1, const float vec1Min, const float vec1Max, vec<Type> &vec2, const size_t VecSize2, const float vec2Min, const float vec2Max) {
 
 	vec1.reserve(VecSize1);
 	vec2.reserve(VecSize2);
@@ -479,8 +531,8 @@ inline void Matrix_T<Type>::printMatrix() {
 
 	if (M_Matrix == nullptr) {
 
-		const str &msg = str(
-			"Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
+		const str &msg =
+			str("Error: Matrix is null." __FUNCTION__ "\n at Line: " + __LINE__);
 
 		std::cerr << msg;
 		throw std::runtime_error(msg);

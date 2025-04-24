@@ -32,6 +32,7 @@ Colors::Colors(const Colors &c) noexcept {
 		ColorReturnStr		= strCheckColorExists(c.ColorReturnStr);
 		BackgroundReturnStr = strCheckBackgroundExists(c.BackgroundReturnStr);
 	}
+
 }
 
 Colors::Colors(const Colors *ptr) noexcept {
@@ -286,7 +287,7 @@ void Colors::SetClassBackgroundColor(
 void Colors::SetLocale(const bool &locale) noexcept {
 	if (locale == false || isLocalized == true) return;
 
-	if (locale == true) { isLocalized = true; }
+	if (locale == true) isLocalized = true;
 }
 
 bool Colors::bGetLocale() { return isLocalized; }
@@ -494,7 +495,6 @@ BackgroundColorEnum Colors::StringToBgEnum(const str &BgColor) {
 std::ostream Colors::strEnumToStream(const ColorEnum &color) {
 
 	std::ostringstream ss;
-	
 
 	if (color == ColorEnum::none || color == ColorEnum::reset) {
 		const std::ostream &reset {std::cout << "" << termcolor::reset};
@@ -564,27 +564,35 @@ void Colors::ResetBackgroundColor() noexcept {
 
 void Colors::Print(const str &msg, const ColorEnum &color) {
 
-	//std::cout << UseColor(color) << msg << termcolor::reset;
+	// std::cout << UseColor(color) << msg << termcolor::reset;
 }
+
+void Colors::Print(const ColorEnum &color, const str &msg, ...) {
+
+
+}
+
+void Colors::Print(const BgEnum &color, const str &msg, ...) {}
 
 void Colors::PrintColor(const ColorEnum &color) {
 
 	switch (color) {
 
-		case ColorEnum::none		   : [[fallthrough]];
-		case ColorEnum::reset		   : std::cout << termcolor::reset; break;
-		case ColorEnum::grey		   : std::cout << termcolor::grey; break;
-		case ColorEnum::red			   : std::cout << termcolor::red; break;
-		case ColorEnum::green		   : std::cout << termcolor::green; break;
-		case ColorEnum::yellow		   : std::cout << termcolor::yellow; break;
-		case ColorEnum::blue		   : std::cout << termcolor::blue; break;
-		case ColorEnum::magenta		   : std::cout << termcolor::magenta; break;
-		case ColorEnum::cyan		   : std::cout << termcolor::cyan; break;
-		case ColorEnum::white		   : std::cout << termcolor::white; break;
+		case ColorEnum::none	: [[fallthrough]];
+		case ColorEnum::reset	: std::cout << termcolor::reset; break;
+		case ColorEnum::grey	: std::cout << termcolor::grey; break;
+		case ColorEnum::red		: std::cout << termcolor::red; break;
+		case ColorEnum::green	: std::cout << termcolor::green; break;
+		case ColorEnum::yellow	: std::cout << termcolor::yellow; break;
+		case ColorEnum::blue	: std::cout << termcolor::blue; break;
+		case ColorEnum::magenta : std::cout << termcolor::magenta; break;
+		case ColorEnum::cyan	: std::cout << termcolor::cyan; break;
+		case ColorEnum::white	: std::cout << termcolor::white; break;
+
 		case ColorEnum::bright_grey :
 			std::cout << termcolor::bright_grey;
 			break;
-		case ColorEnum::bright_red	   : std::cout << termcolor::bright_red; break;
+		case ColorEnum::bright_red : std::cout << termcolor::bright_red; break;
 		case ColorEnum::bright_green :
 			std::cout << termcolor::bright_green;
 			break;
@@ -606,6 +614,8 @@ void Colors::PrintColor(const ColorEnum &color) {
 		default : std::cout << "Invalid color"; break;
 	};
 }
+
+void Colors::PrintColor(const BgEnum &color) {}
 
 void Colors::PrintMsgColor(const str &msg, const ColorEnum &color,
 						   const bool &reset) {
@@ -648,13 +658,15 @@ void Colors::PrintMsgColor(const str &msg, const ColorEnum &color,
 
 	std::cout << msg;
 
-	if (reset) 
-		std::cout << termcolor::reset;
-	
+	if (reset) std::cout << termcolor::reset;
 }
 
-std::streambuf Colors::UseColor(const ColorEnum &color) {
-	//return strEnumToStream(color);
+void Colors::PrintMsgColor(const str &msg, const BgEnum &color,
+						   const bool &reset) {}
+
+str Colors::UseColor(const ColorEnum &color) {
+	// return strEnumToStream(color);
+	return str();
 }
 
 str Colors::UseColor(const BackgroundColorEnum &BgColor) {
@@ -770,10 +782,10 @@ bool Colors::bCheckBgExists(const str &BgColor) {
 
 	if (BgColor.empty()) {
 		Print("Invalid Background color passed: \n "
-					"BgColor = " +
-						BgColor +
-						" is empty \n",
-					CEnum::red);
+			  "BgColor = " +
+				  BgColor +
+				  " is empty \n",
+			  CEnum::red);
 		return false;
 	}
 
@@ -798,10 +810,10 @@ bool Colors::bCheckBgExists(const str &BgColor) {
 
 	if (BackgroundExists == false)
 		Print("Invalid Background color passed: \n "
-					"BgColor = " +
-						BgColor +
-						" is not valid \n",
-					CEnum::red);
+			  "BgColor = " +
+				  BgColor +
+				  " is not valid \n",
+			  CEnum::red);
 
 	return false;
 }

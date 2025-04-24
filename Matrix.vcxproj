@@ -226,7 +226,7 @@
       <RegisterOutput>false</RegisterOutput>
       <LargeAddressAware>true</LargeAddressAware>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <WindowsMetadataFile>
       </WindowsMetadataFile>
       <WindowsMetadataLinkDelaySign>false</WindowsMetadataLinkDelaySign>
@@ -235,8 +235,8 @@
       <GenerateMapFile>true</GenerateMapFile>
       <MapFileName>
       </MapFileName>
-      <MapExports>false</MapExports>
-      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <MapExports>true</MapExports>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
     <Manifest />
   </ItemDefinitionGroup>
@@ -306,6 +306,7 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="cpp.hint" />
     <None Include="Macros.props" />
     <None Include="Matrix\x64\MyConfigDebug\Colors.asm">
@@ -326,7 +327,6 @@
   <ItemGroup>
     <ClInclude Include="include\Colors.hpp" />
     <ClInclude Include="include\Error.hpp" />
-    <ClInclude Include="include\Main.hpp" />
     <ClInclude Include="include\Matrix.hpp" />
     <ClInclude Include="include\MyTypes.hpp" />
     <ClInclude Include="include\Random.hpp" />

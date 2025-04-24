@@ -120,7 +120,7 @@ public:
 	str StrGetBackgroundColor(const Colors &c);
 	str strCheckBackgroundExists(const str &BackgroundColor);
 
-private:
+protected:
 
 	void Initializer() noexcept;
 
@@ -129,8 +129,6 @@ private:
 
 	std::ostream errOstr_ostrDefaultCase();
 	std::ostream errOstr_ostrDefaultCase(const str &msg);
-
-protected:
 
 	bool bHasColor(const ColorEnum &color) noexcept;
 	bool bHasBgColor(const BackgroundColorEnum &BgColor) noexcept;
@@ -162,15 +160,21 @@ public:
 	inline void	ResetBackgroundColor() noexcept;
 
 	void Print(const str &msg,
-							  const ColorEnum &color = ColorEnum::reset);
+							  const ColorEnum &color);
+
+	void Print(const ColorEnum &color, const str &msg, ...);
+	void Print(const BgEnum &color, const str &msg, ...);
 
 	void PrintColor(const ColorEnum &color);
+	void PrintColor(const BgEnum &color);
+
 	void
 	PrintMsgColor(const str &msg, const ColorEnum &color, const bool& reset = false);
+	void PrintMsgColor(const str &msg, const BgEnum &color, const bool& reset = false);
 
-	std::streambuf UseColor(const ColorEnum &color);
+	str UseColor(const ColorEnum &color);
 	str UseColor(const BackgroundColorEnum &color);
-
+	
 	str UseBackgroundColor(const BackgroundColorEnum &color);
 
 	const Colors GetColors() const noexcept;

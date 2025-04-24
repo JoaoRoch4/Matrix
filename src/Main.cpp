@@ -1,31 +1,48 @@
-#include <Colors.hpp>
+#pragma once
+
+#include "Matrix.hpp"
 #include <iostream>
-#include <print>
+#include <istream>
+
+using std::cout;
+#define tpid(x) typeid(x).name()
 
 int main() {
 
-	My::Colors c1;
-	My::Colors *c2 = new My::Colors;
-	My::Colors	*c3(c2);
+	Matrix matrix(3, 3);
 
-	bool bCheckBgExists	 = c1.bCheckBgExists("on_red");
-	bool bCheckBgExists1 = c1.bCheckBgExists("on_purple");
+	std::cout << "Matrix Rows: " << matrix.GetRows() << "\n"
+			  << "Matrix Cols: " << matrix.GetCols() << "\n";
 
-	bool bCheckBgExists2 = c1.bCheckBgExists(My::BackgroundColorEnum::on_blue);
-	bool bCheckBgExists3 = c1.bCheckBgExists(My::BackgroundColorEnum(555));
-	bool bCheckBgExists4 = c1.bCheckBgExists(My::BackgroundColorEnum::none);
-	bool bCheckBgExists5 = c1.bCheckBgExists("");
-	bool bCheckBgExists6 = c1.bCheckBgExists("blablabla");
+	Matrix matrix2 = matrix;
 
-	std::cout << "bCheckBgExists: " << bCheckBgExists << '\n';
-	std::cout << "bCheckBgExists1: " << bCheckBgExists1 << '\n';
-	std::cout << "bCheckBgExists2: " << bCheckBgExists2 << '\n';
-	std::cout << "bCheckBgExists3: " << bCheckBgExists3 << '\n';
-	std::cout << "bCheckBgExists4: " << bCheckBgExists4 << '\n';
-	std::cout << "bCheckBgExists5: " << bCheckBgExists5 << '\n';
-	std::cout << "bCheckBgExists6: " << bCheckBgExists6 << '\n';
+	Matrix matrix3(2, 2);
+	matrix3 = matrix2;
 
-	delete c2;
+	int	 cols = matrix3.GetCols<int>();
+	long rows = matrix2.GetRows<long>();
+
+	long double ldCols {matrix.GetCols<long double>()};
+	long double ldRows {matrix.GetRows<long double>()};
+
+	Matrix matrix4(10, 15);
+
+	long long llCols = matrix4.GetCols();
+	long long llRows = matrix4.GetCols();
+
+	Matrix matrix5(12, 20);
+
+	unsigned long long ullCols = matrix5.GetCols();
+	unsigned long long ullRows = matrix5.GetRows();
+
+	cout << "cols: " << cols << " cols type: " << tpid(cols) << '\n'
+		 << "rows: " << rows << " rows type: " << tpid(rows) << '\n'
+		 << "ldCols: " << ldCols << " ldCols type: " << tpid(ldCols) << '\n' 
+		 << "ldRows: " << ldRows << " ldRows type: " << tpid(ldRows) << '\n' 
+		 << "llCols: " << llCols << " llCols type: " << tpid(llCols) << '\n' 
+		 << "llRows: " << llRows << " llRows type: " << tpid(llRows) << '\n' 
+		 << "ullCols: " << ullCols << " ullCols type: " << tpid(ullCols) << '\n' 
+		 << "ullRows: " << ullRows << " ullRows type: " << tpid(ullRows);
 
 	std::cin.get();
 	return 0;

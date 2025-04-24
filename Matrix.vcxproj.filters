@@ -58,9 +58,6 @@
     <ClInclude Include="include\Error.hpp">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Main.hpp">
-      <Filter>Include</Filter>
-    </ClInclude>
     <ClInclude Include="include\Matrix.hpp">
       <Filter>Include</Filter>
     </ClInclude>
@@ -129,6 +126,7 @@
     <None Include="vcpkg-configuration.json">
       <Filter>Vcpkg</Filter>
     </None>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Matrix\x64\MyConfigDebug\Matrix.log">

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="My::Colors">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KMBCEVBAUABAIEAACAJAQBAIYgBhAAiggACiwoBMRAo=</HashCode>
+      <FileName>include\Colors.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Error" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAIAAAAAAEAAA=</HashCode>
+      <FileName>include\Error.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StaticError" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEAAA=</HashCode>
+      <FileName>include\Error.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matrix">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IMICAAAAAAAgAGAABAgAAAAAAKAgAAIAAEAIgAQAAiA=</HashCode>
+      <FileName>include\Matrix.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matrix_T&lt;Type&gt;" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAQAAyFAQAggAAEAGQCIACAEiAAAAAAgAARAAqA=</HashCode>
+      <FileName>include\Matrix.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyTypes">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>include\MyTypes.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Random" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAQAgIIABiAAEQAAAAwAAABAAABAAACAIgAIgIAAA=</HashCode>
+      <FileName>include\Random.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StaticRandom" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAEAAAAAAAAAUAAAgAAAAAABAAgAAAAAAA=</HashCode>
+      <FileName>include\Random.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="My::ColorEnum">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQAAAAAEAABEUCAAAAIEQAAAAIAABABAIAAAAQAAAgA=</HashCode>
+      <FileName>include\Colors.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="My::BackgroundColorEnum">
+    <Position X="5.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EQIAAAAEEEAIAACAAQAACIAAAgAgAACACCAIAAAAAQA=</HashCode>
+      <FileName>include\Colors.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
