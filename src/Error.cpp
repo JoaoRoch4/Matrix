@@ -6,6 +6,10 @@
 #include <iostream>
 #include <stdexcept>
 
+Error::Error(const STR &message) noexcept : m_message(message) {}
+
+Error::Error(const char *message) noexcept : m_message(message) {}
+
 void Error::Exit(const char *message) {
 	__debugbreak();
 	Print(message);
@@ -14,16 +18,15 @@ void Error::Exit(const char *message) {
 
 void Error::Exit(const STR &message) { Exit(message.c_str()); }
 
-void Error::Print(const char *message) const noexcept {
+void Error::Print(const char *message) const {
 	std::cerr << message << std::endl;
 }
 
-void Error::Print(const STR &message) const noexcept {
+void Error::Print(const STR &message) const {
 	return Print(message.c_str());
 }
 
-using OSTR = std::ostream;
-OSTR &operator<<(OSTR &os, const Error &e) noexcept {
-	std::cerr << e << std::endl;
+std::ostream &operator<<(std::ostream &os, const Error &Err) {
+	os << "Error occurred: " << Err.m_message;
 	return os;
 }

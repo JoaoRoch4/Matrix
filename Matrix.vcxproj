@@ -330,12 +330,13 @@
     <ClInclude Include="include\Matrix.hpp" />
     <ClInclude Include="include\MyTypes.hpp" />
     <ClInclude Include="include\Random.hpp" />
+    <ClInclude Include="Matrix.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Main\Main.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="src\Colors.cpp" />
     <ClCompile Include="src\Error.cpp" />
-    <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Matrix.cpp" />
     <ClCompile Include="src\Random.cpp" />
   </ItemGroup>
   <ItemGroup>

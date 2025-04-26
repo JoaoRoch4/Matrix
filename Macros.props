@@ -6,6 +6,7 @@
     <termicolorPath>C:\vcpkg\packages\termcolor_x64-windows\include\termcolor\</termicolorPath>
     <include_dir>$(ProjectDir)include</include_dir>
     <src_dir>$(ProjectDir)src</src_dir>
+    <main_dir>$(ProjectDir)Main</main_dir>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
@@ -24,6 +25,10 @@
     </BuildMacro>
     <BuildMacro Include="src_dir">
       <Value>$(src_dir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="main_dir">
+      <Value>$(main_dir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>
 </Project>
