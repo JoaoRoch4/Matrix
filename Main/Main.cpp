@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 #include "Error.hpp"
 #include "Matrix.hpp"
@@ -11,13 +12,25 @@ int main() {
 
 	Matrix<2, 2, int> AInt = A;
 
-	Matrix<2, 2> B = {{5, 6}, {7, 8}};
+	Matrix<2, 2> B {{5, 6}, {7, 8}};
 
 	Matrix<2, 2, int> C = A + B;
 
 	Matrix<2, 2, float> DFloat {{1.5f, 2.3f}, {3.4f, 4.1f}};
 	Matrix<2, 2, int>	DInt = DFloat;
 	Matrix<2, 2, double> DDouble = DFloat;
+	//Matrix<1, 1, long long> Empty{{2},{2}};
+	Matrix<2, 2>		 Add;
+	Add += Add.Add(A, B);
+
+	std::unique_ptr<Matrix<2, 2>> pA =
+		std::make_unique<Matrix<2, 2>>(Matrix<2, 2>{{5, 6}, {7, 8}});
+
+
+	pA->print();
+
+	std::cout << "Matrix<2, 2>Add;	Add = Add.Add(A, B)	" << Add << '\n';
+	
 
 	std::cout << "\n DDouble.print() \n";
 	DDouble.print();
