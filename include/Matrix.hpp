@@ -3,14 +3,13 @@
 #include <array> // For std::array (used for fixed-size matrix storage)
 #include <initializer_list> // For initializer_list (used for matrix initialization)
 #include <iosfwd> // For forward declaration of std::ostream (used for printing)
-#include <iostream>	 // For std::cout and printing
-#include <memory>	 // For std::unique_ptr and std::shared_ptr
-#include <sstream>	 // **Added this for std::ostringstream**
-#include <stdexcept> // Not used here but commonly useful for exceptions
-#include <string>	 // For std::string (not used here but commonly useful)
-#include <type_traits>
-#include <typeinfo>
-#include <utility> // For std::move (used for move constructor)
+#include <iostream>	   // For std::cout and printing
+#include <memory>	   // For std::unique_ptr and std::shared_ptr
+#include <sstream>	   // **Added this for std::ostringstream**
+#include <stdexcept>   // Not used here but commonly useful for exceptions
+#include <string>	   // For std::string (not used here but commonly useful)
+#include <type_traits> // For std::is_arithmetic (used for type checking)
+#include <utility>	   // For std::move (used for move constructor)
 
 // Proxy that either prints on destruction or returns a string representation
 template <size_t Rows, size_t Cols, typename T = long long>
@@ -99,6 +98,8 @@ public:
 	// Default constructor
 	Matrix() : data() {};
 
+	Matrix(const std::array<std::array<T, Cols>, Rows> &data) : data(data) {}
+
 	// Copy constructor
 	Matrix(const Matrix<Rows, Cols, T> &other) : data(other.data) {}
 
@@ -111,11 +112,21 @@ public:
 		}
 	}
 
-	Matrix(std::unique_ptr<const Matrix<Rows, Cols, T>> other) {
+	template <typename U = const Matrix<Rows, Cols, T>>
+	Matrix(const std::unique_ptr<U> &other) {
 		// Check if the pointer is not null
 		if (other != nullptr) {
 			// Copy data from the other matrix
 			data = other->data;
+		}
+	}
+
+	Matrix(const std::unique_ptr<
+		   const std::initializer_list<std::initializer_list<T>>> &other) {
+		// Check if the pointer is not null
+		if (other != nullptr) {
+			// Copy data from the other matrix
+			data = Iter(*other);
 		}
 	}
 
@@ -131,47 +142,96 @@ public:
 	Matrix(Matrix<Rows, Cols, T> &&other) noexcept
 	  : data(std::move(other.data)) {}
 
+	Matrix(const std::unique_ptr<Matrix<Rows, Cols, T>> &&other) noexcept
+	  : data(std::move(other->data)) {
+		// data = Iter(std::ref(*other));
+	}
+
 	// Constructor that allows matrix initialization with nested initializer lists
 	Matrix(const std::initializer_list<std::initializer_list<T>> &initRef) noexcept
 	  : Matrix() {
-		return Iter(initRef);
+		data = Iter(initRef);
+	}
+
+	// Constructor
+	Matrix(const std::initializer_list<std::initializer_list<T>> &&initRef) noexcept
+	  : Matrix() {
+		data = std::move(Iter(initRef));
 	}
 
 	// Constructor that allows matrix initialization with nested initializer lists
 	Matrix(const std::initializer_list<std::initializer_list<T>> *initPtr) noexcept
 	  : Matrix() {
-		return Iter(initPtr);
+		data = Iter(*initPtr);
 	}
 
-	
 	std::array<std::array<T, Cols>, Rows>
 	Iter(const std::initializer_list<std::initializer_list<T>> &init) const {
 
 		// Row index
-		size_t r = 0;
+		size_t r		 = 0;
+		std::array<std::array<T, Cols>, Rows> localData = data;
 
 		// Iterate through each row of the initializer list
-		for (auto &row : init) {
+		for (const std::initializer_list<T> &row : init) {
 
 			// Column index
 			size_t c = 0;
 
 			// Iterate through each value in the row
-			for (auto &val : row) {
+			for (const T val : row) {
 
 				// Assign value to matrix position
-				data[r][c++] = val;
+				localData[r][c++] = val;
 			}
 			++r;
 		}
 
-		return data;
+		return localData;
 	}
 
+	std::array<std::array<T, Cols>, Rows>
+	Iter(const std::initializer_list<std::initializer_list<T>> &&init) const {
+
+		const std::initializer_list<std::initializer_list<T>> localInit =
+			std::move(init);
+		return Iter(localInit);
+	}
+		
 	std::array<std::array<T, Cols>, Rows> getData() const { return data; }
 
 	void setData(const std::array<std::array<T, Cols>, Rows> &data) {
 		this->data = data;
+	}
+
+	void setData(const std::initializer_list<std::initializer_list<T>> &Data) {
+		data = Iter(Data);
+	}
+
+	const char *getType() const {
+		// Return the type of the matrix
+		if constexpr (std::is_same_v<T, long long>) return "long long";
+		else if constexpr (std::is_same_v<T, long>) return "long";
+		else if constexpr (std::is_same_v<T, short>) return "short";
+		else if constexpr (std::is_same_v<T, unsigned long long>)
+			return "unsigned long long";
+		else if constexpr (std::is_same_v<T, unsigned long>)
+			return "unsigned long";
+		else if constexpr (std::is_same_v<T, unsigned short>)
+			return "unsigned short";
+		else if constexpr (std::is_same_v<T, unsigned int>)
+			return "unsigned int";
+		else if constexpr (std::is_same_v<T, unsigned char>)
+			return "unsigned char";
+		else if constexpr (std::is_same_v<T, signed char>) return "signed char";
+		else if constexpr (std::is_same_v<T, wchar_t>) return "wchar_t";
+		else if constexpr (std::is_same_v<T, int>) return "int";
+		else if constexpr (std::is_same_v<T, float>) return "float";
+		else if constexpr (std::is_same_v<T, double>) return "double";
+		else if constexpr (std::is_same_v<T, long double>) return "long double";
+		else if constexpr (std::is_same_v<T, char>) return "char";
+		else if constexpr (std::is_same_v<T, bool>) return "bool";
+		else return "unknown type";
 	}
 
 	/**
@@ -215,8 +275,8 @@ public:
 	Add(const Matrix<R1, C1, T> &mtx1, const Matrix<R2, C2, T> &mtx2) const {
 
 		static_assert(R1 >= 0, "Matrix1 R1 element is empty!");
-		static_assert(C1 >= 0, "Matrix1 C1 element is empty!");
 		static_assert(R2 >= 0, "Matrix2 R2 element is empty!");
+		static_assert(C1 >= 0, "Matrix1 C1 element is empty!");
 		static_assert(C2 >= 0, "Matrix2 C2 element is empty!");
 
 		// Static assertion fails at compile time if sizes don't match
@@ -324,21 +384,15 @@ public:
 	 */
 	Matrix *operator->() const { return Ptr(); }
 
-	// Overloaded addition operator
-	// Ensures at compile-time that matrix dimensions match
-	template <size_t R, size_t C>
-	Matrix<Rows, Cols, T> operator+(const Matrix<R, C, T> &other) const {
-
-		// Static assertion fails at compile time if template is empty
-		static_assert(R >= 0, "Matrix R element is empty!");
-		static_assert(C >= 0, "Matrix C element is empty!");
-
-		// Static assertion fails at compile time if sizes don't match
-		static_assert(R == Rows && C == Cols,
-					  "Matrices must have the same dimensions to be added.");
+	// Overloaded addition operator	
+	Matrix operator+(const Matrix &other1) const {
+			
+		// Result matrix
+		 
 
 		// Return resulting matrix
-		return Add(other);
+		return Add(other1);
+		
 	}
 
 	Matrix &operator=(Matrix<Rows, Cols, T> &other) {
@@ -398,6 +452,10 @@ public:
 		// Return the row at index i
 		return localData;
 	}
+
+	bool operator==(const Matrix &other) const = default;
+
+	
 };
 
 /**

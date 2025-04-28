@@ -123,6 +123,7 @@
     <SourcePath>$(VC_SourcePath);</SourcePath>
     <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
     <ClangTidyToolPath>..\..\..\..\..\Program Files\LLVM\bin</ClangTidyToolPath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MyConfigDebug|x64'">
     <RunCodeAnalysis>true</RunCodeAnalysis>
@@ -194,7 +195,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_MT;_DLL;_CONSOLE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp23</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -213,20 +214,31 @@
       <BuildStlModules>true</BuildStlModules>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
-      <GenerateSourceDependencies>false</GenerateSourceDependencies>
-      <ErrorReporting>Send</ErrorReporting>
+      <GenerateSourceDependencies>true</GenerateSourceDependencies>
+      <ErrorReporting>Prompt</ErrorReporting>
       <OpenMPSupport>true</OpenMPSupport>
       <AdditionalIncludeDirectories>$(include_dir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>$(src_dir);%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
+      <SDLCheck>true</SDLCheck>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <EnableVectorLength>VectorLength512</EnableVectorLength>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <ShowProgress>NotSet</ShowProgress>
-      <RegisterOutput>false</RegisterOutput>
+      <RegisterOutput>true</RegisterOutput>
       <LargeAddressAware>true</LargeAddressAware>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <WindowsMetadataFile>
       </WindowsMetadataFile>
       <WindowsMetadataLinkDelaySign>false</WindowsMetadataLinkDelaySign>
@@ -237,6 +249,10 @@
       </MapFileName>
       <MapExports>true</MapExports>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <OptimizeReferences>false</OptimizeReferences>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <Profile>true</Profile>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);MSVCRTD.lib</AdditionalDependencies>
     </Link>
     <Manifest />
   </ItemDefinitionGroup>

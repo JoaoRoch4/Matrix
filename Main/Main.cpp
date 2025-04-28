@@ -16,15 +16,25 @@ int main() {
 
 	Matrix<2, 2, int> C = A + B;
 
-	Matrix<2, 2, float> DFloat {{1.5f, 2.3f}, {3.4f, 4.1f}};
-	Matrix<2, 2, int>	DInt = DFloat;
-	Matrix<2, 2, double> DDouble = DFloat;
+	Matrix<2, 2, long double> DLongDouble; 
+	DLongDouble.setData({{1.55l, 2.301l}, {3.4001l, 4.1504l}});
+	//Matrix<2, 2, int>	DInt = DFloat;
+	//Matrix<2, 2, double> DDouble = DFloat;
 	//Matrix<1, 1, long long> Empty{{2},{2}};
 	Matrix<2, 2>		 Add;
 	Add += Add.Add(A, B);
 
-	std::unique_ptr<Matrix<2, 2>> pA =
-		std::make_unique<Matrix<2, 2>>(Matrix<2, 2>{{5, 6}, {7, 8}});
+	std::cout << "DLongDouble.print();\n";
+	DLongDouble.print();
+
+	std::cout << "\n DLongDouble " << DLongDouble << '\n';
+
+	std::cout << "DLongDouble.getType(); " << DLongDouble.getType() << '\n';
+	
+	
+
+	std::unique_ptr<Matrix<2, 2, long>> pA =
+		std::make_unique<Matrix<2, 2, long>>(Matrix<2, 2, long>{{5, 6}, {7, 8}});
 
 
 	pA->print();
@@ -33,14 +43,14 @@ int main() {
 	
 
 	std::cout << "\n DDouble.print() \n";
-	DDouble.print();
+	//DDouble.print();
 	std::cout << "\n";
 
 	std::cout << "Matrix<2, 2> C = A + B: \n" << C << '\n';
-	std::cout << "Matrix<2, 2, float> DFloat: \n" << DFloat << '\n';
-	std::cout << "Matrix<2, 2, int> DInt: \n" << DInt << '\n';
-	std::cout << "Matrix<2, 2, double> DDouble: \n"
-			  << "DDouble.print().str()\n" << DDouble.print().str() << '\n';
+	//std::cout << "Matrix<2, 2, float> DFloat: \n" << DFloat << '\n';
+	//std::cout << "Matrix<2, 2, int> DInt: \n" << DInt << '\n';
+	//std::cout << "Matrix<2, 2, double> DDouble: \n"
+			 // << "DDouble.print().str()\n" << DDouble.print().str() << '\n';
 
 	return 0;
 }
